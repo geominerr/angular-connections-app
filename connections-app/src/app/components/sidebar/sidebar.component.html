@@ -1,0 +1,60 @@
+<nav class="sidebar" [ngClass]="{ 'sidebar--opened': isOpen }">
+  <div class="user">
+    <div class="user__icon-wrapper">
+      <mat-icon class="user__icon">psychology_alt</mat-icon>
+    </div>
+    <p class="user__name">{{ (userName$ | async) || guestName }}</p>
+  </div>
+  <mat-nav-list class="mat-nav-list">
+    <ng-container *ngIf="isLogin$ | async">
+      <mat-list-item>
+        <li class="mat-list-item">
+          <mat-icon>group_add</mat-icon>
+          <span>Add group</span>
+        </li>
+      </mat-list-item>
+      <mat-list-item>
+        <li class="mat-list-item">
+          <mat-icon>group</mat-icon>
+          <span>Your groups</span>
+        </li>
+      </mat-list-item>
+      <mat-list-item>
+        <li class="mat-list-item">
+          <mat-icon>account_circle</mat-icon>
+          <span>Contacts</span>
+        </li>
+      </mat-list-item>
+      <mat-list-item>
+        <li class="mat-list-item">
+          <mat-icon>call</mat-icon>
+          <span>Call</span>
+        </li>
+      </mat-list-item>
+      <mat-list-item>
+        <li class="mat-list-item">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </li>
+      </mat-list-item>
+    </ng-container>
+    <mat-list-item>
+      <li class="mat-list-item">
+        <mat-icon>dark_mode</mat-icon>
+        <span>Night mode</span>
+        <mat-slide-toggle
+          class="mat-slide-toggle"
+          color="primary"
+        ></mat-slide-toggle>
+      </li>
+    </mat-list-item>
+  </mat-nav-list>
+  <mat-nav-list class="mat-nav-list mat-nav-list--last" *ngIf="isLogin$ | async">
+    <mat-list-item>
+      <li class="mat-list-item">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </li>
+    </mat-list-item>
+  </mat-nav-list>
+</nav>

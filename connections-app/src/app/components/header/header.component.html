@@ -1,0 +1,42 @@
+<mat-toolbar color="primary" class="mat-toolbar">
+  <app-sidebar
+    appOutsideClick
+    (outsideClick)="closeMenu()"
+    [isOpen]="isMenuOpen"
+  ></app-sidebar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="toggleMenu($event)"
+  >
+    <mat-icon class="mat-icon">menu</mat-icon>
+  </button>
+  <span>{{ title }}</span>
+  <span class="example-spacer"></span>
+  <ng-container *ngIf="isLogin$ | async">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with mail icon"
+    >
+      <mat-icon class="mat-icon">mail</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with person icon"
+    >
+      <mat-icon class="mat-icon">person</mat-icon>
+    </button>
+  </ng-container>
+
+  <button
+    *ngIf="(isLogin$ | async) === false"
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with login icon"
+  >
+    <mat-icon class="mat-icon">login</mat-icon>
+  </button>
+</mat-toolbar>
