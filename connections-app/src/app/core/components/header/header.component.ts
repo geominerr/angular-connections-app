@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { Observable, of } from 'rxjs';
-import { OutsideClickDirective } from 'src/app/directives/outside-click.directive';
+import { OutsideClickDirective } from 'src/app/core/directives/outside-click.directive';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
