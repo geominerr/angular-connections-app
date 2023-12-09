@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="form-wrapper">
+    <form
+      action="#"
+      class="signup-form"
+      [ngClass]="{ blur: (isRequest$ | async) }"
+      [formGroup]="form"
+      (ngSubmit)="submitForm()"
+    >
+      <fieldset class="signup-form__fieldset">
+        <legend class="signup-form__legend">Signup</legend>
+        <mat-form-field class="mat-form-field">
+          <mat-label>Enter your name</mat-label>
+          <input matInput formControlName="username" />
+          <mat-error>{{ getUsernameValidationError() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <mat-label>Enter your emai</mat-label>
+          <input
+            matInput
+            placeholder="example@gmail.com"
+            formControlName="email"
+          />
+          <mat-error>{{ getEmailValidationError() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="toggleHidePassword($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error>{{ getPasswordValidationError() }}</mat-error>
+        </mat-form-field>
+      </fieldset>
+      <button
+        [disabled]="form.invalid || (isRequest$ | async)"
+        mat-button
+        color="primary"
+        type="submit"
+        class="mat-button"
+      >
+        Sign up
+      </button>
+      <div class="signin-nav">
+        <h3 class="signin-nav__title">
+          Already have an account? Please sign in!
+        </h3>
+        <button
+          mat-button
+          color="primary"
+          class="mat-button"
+          (click)="redirectToSignin($event)"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
+    <mat-spinner
+      *ngIf="isRequest$ | async"
+      class="mat-spinner"
+      [diameter]="40"
+    ></mat-spinner>
+  </div>
+</div>
