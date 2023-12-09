@@ -3,13 +3,18 @@ import {
   Component,
   Input,
   Output,
+  OnInit,
 } from '@angular/core';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectAuthStatus } from 'src/app/store/selectors/user.selectors';
+
 import { OutsideClickDirective } from 'src/app/core/directives/outside-click.directive';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
@@ -29,12 +34,18 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     OutsideClickDirective,
   ],
 })
-export class HeaderComponent {
-  @Input() isLogin$: Observable<boolean> = of(false);
+export class HeaderComponent implements OnInit {
+  @Input() isLogin$!: Observable<boolean>;
 
   @Output() isMenuOpen: boolean = false;
 
   title: string = 'Polymer';
+
+  constructor(private router: Router, private store: Store) {}
+
+  ngOnInit(): void {
+    this.isLogin$ = this.store.select(selectAuthStatus);
+  }
 
   toggleMenu(event: Event): void {
     event.stopPropagation();
@@ -46,5 +57,9 @@ export class HeaderComponent {
     if (this.isMenuOpen) {
       this.isMenuOpen = !this.isMenuOpen;
     }
+  }
+
+  navigateToSignInPage(): void {
+    this.router.navigate(['/signin']);
   }
 }

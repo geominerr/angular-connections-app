@@ -3,6 +3,7 @@
     appOutsideClick
     (outsideClick)="closeMenu()"
     [isOpen]="isMenuOpen"
+    [isLogin$]="isLogin$"
   ></app-sidebar>
   <button
     mat-icon-button
@@ -36,6 +37,7 @@
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with login icon"
+    (click)="navigateToSignInPage()"
   >
     <mat-icon class="mat-icon">login</mat-icon>
   </button>
