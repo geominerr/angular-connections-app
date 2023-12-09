@@ -11,3 +11,19 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.mat-mdc-snack-bar-container {
+  &.green-snackbar,
+  &.red-snackbar {
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  &.green-snackbar {
+    --mdc-snackbar-container-color: #378137;
+  }
+
+  &.red-snackbar {
+    --mdc-snackbar-container-color: #e65045;
+  }
+}
