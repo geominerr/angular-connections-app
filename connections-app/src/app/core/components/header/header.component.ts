@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectAuthStatus } from 'src/app/store/selectors/user.selectors';
 
@@ -61,5 +61,9 @@ export class HeaderComponent implements OnInit {
 
   navigateToSignInPage(): void {
     this.router.navigate(['/signin']);
+  }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
   }
 }

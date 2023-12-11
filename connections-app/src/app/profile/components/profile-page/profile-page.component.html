@@ -1,0 +1,6 @@
+<ng-container *ngIf="(userProfile$ | async) as userInfo; else spinner">
+  <app-profile [userInfo]="userInfo"></app-profile>
+</ng-container>
+<ng-template #spinner>
+  <mat-spinner class="mat-spinner" [diameter]="50"></mat-spinner>
+</ng-template>

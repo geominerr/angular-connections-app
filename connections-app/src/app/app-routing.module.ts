@@ -28,6 +28,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuardLogged],
   },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/components/profile-page/profile-page.component').then(
+        (m) => m.ProfilePageComponent
+      ),
+    canActivate: [AuthGuardNotLogged],
+  },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { Subscription, tap } from 'rxjs';
+import { Subscription, skip, tap } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import {
@@ -9,6 +9,8 @@ import {
   selectCreatedFlag,
   selectSigninError,
   selectLoggedFlag,
+  selectUserName,
+  selectEditProfileError,
 } from 'src/app/store/selectors/user.selectors';
 
 @Component({
@@ -87,6 +89,47 @@ export class SnackbarComponent implements OnInit, OnDestroy {
                 duration: 3000,
                 panelClass: ['green-snackbar'],
               });
+            }
+          })
+        )
+        .subscribe()
+    );
+
+    this.subscritpion.add(
+      this.store
+        .select(selectUserName)
+        .pipe(
+          skip(1),
+          tap((userName) => {
+            if (userName) {
+              this.snackBar.open(
+                `Username successfully changed to ${userName}`,
+                'close',
+                {
+                  duration: 3000,
+                  panelClass: ['green-snackbar'],
+                }
+              );
+            }
+          })
+        )
+        .subscribe()
+    );
+
+    this.subscritpion.add(
+      this.store
+        .select(selectEditProfileError)
+        .pipe(
+          tap((err) => {
+            if (err) {
+              this.snackBar.open(
+                'Username has not been changed there was a connection error, try later please',
+                'close',
+                {
+                  duration: 3500,
+                  panelClass: ['red-snackbar'],
+                }
+              );
             }
           })
         )
