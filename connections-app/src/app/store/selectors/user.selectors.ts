@@ -36,6 +36,11 @@ export const selectSigninError = createSelector(
   (state: State) => state.signinError
 );
 
+export const selectEditProfileError = createSelector(
+  selectAuthState,
+  (state: State) => state.editProfileError
+);
+
 export const selectGeneralState = createSelector(
   selectAuthState,
   (state: State) => state
@@ -50,4 +55,14 @@ export const selectAuthStatus = createSelector(
 
     return false;
   }
+);
+
+export const selectUserProfile = createSelector(
+  selectAuthState,
+  (state: State) => state.userProfile
+);
+
+export const selectUserName = createSelector(
+  selectAuthState,
+  (state: State) => state.userProfile?.name
 );

@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserActions } from '../actions/user.actions';
 import { StoreActions } from '../actions/store.actions';
+import { ProfileActions } from '../actions/profile.actions';
 
 export const userFeatureKey = 'user';
 
@@ -21,6 +22,7 @@ export interface State {
   isLogged: boolean;
   signinError: boolean;
   existingEmails: string[];
+  editProfileError: boolean;
 }
 
 export const initialState: State = {
@@ -31,6 +33,7 @@ export const initialState: State = {
   isLogged: false,
   signinError: false,
   existingEmails: [],
+  editProfileError: false,
 };
 
 export const reducer = createReducer(
@@ -68,6 +71,8 @@ export const reducer = createReducer(
       signinError: false,
       isCreated: false,
       isLogged: false,
+      sendRequest: false,
+      editProfileError: false,
     })
   ),
   on(
@@ -94,6 +99,57 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       signinError: res,
+    })
+  ),
+  on(
+    ProfileActions.profileLoad,
+    (state): State => ({
+      ...state,
+    })
+  ),
+  on(
+    ProfileActions.profileSuccess,
+    (state, { userInfo }): State => ({
+      ...state,
+      userProfile: { ...userInfo },
+    })
+  ),
+  on(
+    ProfileActions.profileFailure,
+    (state): State => ({
+      ...state,
+      sendRequest: false,
+    })
+  ),
+  on(
+    ProfileActions.profileUpdate,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      editProfileError: false,
+    })
+  ),
+  on(
+    ProfileActions.profileUpdateSuccess,
+    (state, { userName }): State => ({
+      ...state,
+      sendRequest: false,
+      userProfile: {
+        ...state.userProfile,
+        name: userName,
+        email: state.userProfile?.email || '',
+        uid: state.userProfile?.uid || '',
+        createdAt: state.userProfile?.createdAt || '',
+      },
+      editProfileError: false,
+    })
+  ),
+  on(
+    ProfileActions.profileUpdateFailure,
+    (state): State => ({
+      ...state,
+      sendRequest: false,
+      editProfileError: true,
     })
   )
 );
