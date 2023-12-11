@@ -3,13 +3,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Observable, catchError, map, throwError } from 'rxjs';
 
-import {
-  IUser,
-  ILoginData,
-  ILoginInfo,
-  ILoginResponse,
-} from '../models/user.model';
-import { ISigninResponse, ISignupResponse } from '../models/responses.model';
+import { IUser, ILoginData, ILoginResponse } from '../models/user.model';
+import { ISignupResponse } from '../models/responses.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +20,7 @@ export class AuthService {
 
   signupUser(user: IUser): Observable<ISignupResponse> {
     return this.httpClient
-      .post<Response>('/registration', user, { observe: 'response' })
+      .post<Response>('registration', user, { observe: 'response' })
       .pipe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         map((res: HttpResponse<any>) => ({
@@ -36,8 +31,7 @@ export class AuthService {
         catchError((error) =>
           throwError(() => {
             if (
-              error?.error?.type === this.signupTypeError &&
-              !this.existEmails.includes(user.email)
+              error?.error?.type === this.signupTypeError && !this.existEmails.includes(user.email)
             ) {
               this.existEmails.push(user.email);
             }
@@ -50,7 +44,7 @@ export class AuthService {
 
   signinUser(loginData: ILoginData): Observable<ILoginResponse> {
     return this.httpClient
-      .post<Response>('/login', loginData, { observe: 'response' })
+      .post<Response>('login', loginData, { observe: 'response' })
       .pipe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         map((res: HttpResponse<any>) => {
