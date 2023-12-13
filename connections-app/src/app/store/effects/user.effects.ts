@@ -88,4 +88,30 @@ export class UserEffects {
     },
     { dispatch: false }
   );
+
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.userLogout),
+      mergeMap(() =>
+        this.authService.logout().pipe(
+          map(() => UserActions.userLogoutSuccess({ redirect: true })),
+          catchError(() => of(UserActions.userLogoutFailure({ err: true })))
+        )
+      )
+    );
+  });
+
+  logoutSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(UserActions.userLogoutSuccess),
+        tap((action) => {
+          if (action.redirect) {
+            this.router.navigate(['/signin']);
+          }
+        })
+      );
+    },
+    { dispatch: false }
+  );
 }

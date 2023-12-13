@@ -99,7 +99,7 @@ export class SnackbarComponent implements OnInit, OnDestroy {
       this.store
         .select(selectUserName)
         .pipe(
-          skip(1),
+          skip(2),
           tap((userName) => {
             if (userName) {
               this.snackBar.open(

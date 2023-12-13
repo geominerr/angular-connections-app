@@ -32,8 +32,12 @@ export class StoreSaverService {
       .select(selectGeneralState)
       .pipe(
         tap((state: State) => {
-          console.log('State changed ', (this.counter += 1));
-          localStorage.setItem(this.localStorageKey, JSON.stringify(state));
+          console.log('State changed ', (this.counter += 1), state);
+          if (!state?.isLogout) {
+            localStorage.setItem(this.localStorageKey, JSON.stringify(state));
+          } else {
+            localStorage.removeItem(this.localStorageKey);
+          }
         })
       )
       .subscribe();

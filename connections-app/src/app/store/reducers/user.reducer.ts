@@ -20,9 +20,11 @@ export interface State {
   };
   isCreated: boolean;
   isLogged: boolean;
+  isLogout: boolean;
   signinError: boolean;
   existingEmails: string[];
   editProfileError: boolean;
+  logoutError: boolean;
 }
 
 export const initialState: State = {
@@ -31,9 +33,11 @@ export const initialState: State = {
   userProfile: null,
   isCreated: false,
   isLogged: false,
+  isLogout: false,
   signinError: false,
   existingEmails: [],
   editProfileError: false,
+  logoutError: false,
 };
 
 export const reducer = createReducer(
@@ -43,6 +47,7 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
+      isLogout: false,
     })
   ),
   on(
@@ -73,6 +78,8 @@ export const reducer = createReducer(
       isLogged: false,
       sendRequest: false,
       editProfileError: false,
+      userProfile: null,
+      isLogout: false,
     })
   ),
   on(
@@ -81,6 +88,7 @@ export const reducer = createReducer(
       ...state,
       sendRequest: true,
       signinError: false,
+      isLogout: false,
     })
   ),
   on(
@@ -99,6 +107,34 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       signinError: res,
+    })
+  ),
+  on(
+    UserActions.userLogout,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+    })
+  ),
+  on(
+    UserActions.userLogoutFailure,
+    (state): State => ({
+      ...state,
+      sendRequest: false,
+    })
+  ),
+  on(
+    UserActions.userLogoutSuccess,
+    (state): State => ({
+      ...state,
+      isLogout: true,
+      sendRequest: false,
+      userProfile: null,
+      loginInfo: null,
+      isLogged: false,
+      isCreated: false,
+      existingEmails: [],
+      editProfileError: false,
     })
   ),
   on(
