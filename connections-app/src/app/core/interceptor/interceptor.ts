@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { State } from 'src/app/store/reducers/user.reducer';
+import { IHeadersAuth } from '../models/general.model';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
@@ -16,23 +17,30 @@ export class Interceptor implements HttpInterceptor {
 
   mapEndpoints: Record<string, boolean> = {
     profile: true,
+    logout: true,
   };
 
   intercept(
     req: HttpRequest<string>,
     next: HttpHandler
   ): Observable<HttpEvent<void>> {
-    const stateFromLS: State = JSON.parse(
-      localStorage.getItem(this.localStorageKey) || ''
+    let headers: IHeadersAuth | null = null;
+
+    const stateFromLS: string | null = localStorage.getItem(
+      this.localStorageKey
     );
 
-    const headers = {
-      'rs-uid': stateFromLS?.loginInfo?.uid || '',
-      'rs-email': stateFromLS?.loginInfo?.email || '',
-      Authorization: `Bearer ${stateFromLS?.loginInfo?.token}`,
-    };
+    if (stateFromLS) {
+      const parsedState: State = JSON.parse(stateFromLS);
 
-    if (this.mapEndpoints?.[req.url] && headers?.['rs-uid']) {
+      headers = {
+        'rs-uid': parsedState?.loginInfo?.uid || '',
+        'rs-email': parsedState?.loginInfo?.email || '',
+        Authorization: `Bearer ${parsedState?.loginInfo?.token}`,
+      };
+    }
+
+    if (this.mapEndpoints?.[req.url] && headers) {
       const modifiedReq = req.clone({
         url: `${this.baseUrl}${req.url}`,
         setHeaders: { ...headers },
