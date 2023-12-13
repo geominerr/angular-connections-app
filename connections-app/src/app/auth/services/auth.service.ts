@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Observable, catchError, map, throwError } from 'rxjs';
 
+import { IErrorResponse } from 'src/app/core/models/general.model';
 import { IUser, ILoginData, ILoginResponse } from '../models/user.model';
 import { ISignupResponse } from '../models/responses.model';
 
@@ -31,12 +32,19 @@ export class AuthService {
         catchError((error) =>
           throwError(() => {
             if (
-              error?.error?.type === this.signupTypeError && !this.existEmails.includes(user.email)
+              error?.error?.type === this.signupTypeError &&
+              !this.existEmails.includes(user.email)
             ) {
               this.existEmails.push(user.email);
             }
 
-            return [...this.existEmails];
+            return {
+              action: 'signup',
+              error: {
+                type: error?.error?.type,
+                message: error?.error?.message,
+              },
+            };
           })
         )
       );
@@ -58,14 +66,41 @@ export class AuthService {
           };
         }),
         catchError((error) =>
-          throwError(() => {
-            console.log(error);
-            if (error?.error?.type === this.signinTypeError) {
-              return true;
-            }
+          throwError(
+            (): IErrorResponse => ({
+              action: 'signin',
+              error: {
+                type: error?.error?.type,
+                message: error?.error?.message,
+              },
+            })
+          )
+        )
+      );
+  }
 
-            return false;
-          })
+  logout(): Observable<{ status: number }> {
+    return this.httpClient
+      .delete<Response>('logout', { observe: 'response' })
+      .pipe(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        map((res: HttpResponse<any>) => {
+          console.log(res);
+
+          return {
+            status: res.status,
+          };
+        }),
+        catchError((error) =>
+          throwError(
+            (): IErrorResponse => ({
+              action: 'logout',
+              error: {
+                type: error?.error?.type,
+                message: error?.error?.message,
+              },
+            })
+          )
         )
       );
   }

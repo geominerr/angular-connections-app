@@ -26,19 +26,32 @@ export const selectLoggedFlag = createSelector(
   (state: State) => state.isLogged
 );
 
-export const selectExistingEmails = createSelector(
+export const selectSignupExistUserError = createSelector(
   selectAuthState,
-  (state: State) => state.existingEmails
+  (state: State) => {
+    if (
+      state.error?.action === 'signup' &&
+      state.error?.error?.type === 'PrimaryDuplicationException'
+    ) {
+      return true;
+    }
+
+    return false;
+  }
 );
 
-export const selectSigninError = createSelector(
+export const selectSigninNotFoundError = createSelector(
   selectAuthState,
-  (state: State) => state.signinError
-);
+  (state: State) => {
+    if (
+      state.error?.action === 'signin' &&
+      state.error?.error?.type === 'NotFoundException'
+    ) {
+      return true;
+    }
 
-export const selectEditProfileError = createSelector(
-  selectAuthState,
-  (state: State) => state.editProfileError
+    return false;
+  }
 );
 
 export const selectGeneralState = createSelector(
@@ -65,4 +78,14 @@ export const selectUserProfile = createSelector(
 export const selectUserName = createSelector(
   selectAuthState,
   (state: State) => state.userProfile?.name
+);
+
+export const selectError = createSelector(
+  selectAuthState,
+  (state: State) => state.error
+);
+
+export const selectSuccessAction = createSelector(
+  selectAuthState,
+  (state: State) => state.successAction
 );

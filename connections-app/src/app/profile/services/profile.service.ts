@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable, catchError, map, throwError } from 'rxjs';
+import { IErrorResponse } from 'src/app/core/models/general.model';
 import { IUserProfile, IProfile } from '../models/profile.model';
 
 @Injectable({
@@ -27,10 +28,15 @@ export class ProfileService {
         };
       }),
       catchError((error: HttpErrorResponse) =>
-        throwError(() => {
-          console.log(error);
-          return error;
-        })
+        throwError(
+          (): IErrorResponse => ({
+            action: 'profile',
+            error: {
+              type: error?.error?.type,
+              message: error?.error?.message,
+            },
+          })
+        )
       )
     );
   }
@@ -42,10 +48,15 @@ export class ProfileService {
         return true;
       }),
       catchError((error: HttpErrorResponse) =>
-        throwError(() => {
-          console.log(error);
-          return error;
-        })
+        throwError(
+          (): IErrorResponse => ({
+            action: 'profileUpdate',
+            error: {
+              type: error?.error?.type,
+              message: error?.error?.message,
+            },
+          })
+        )
       )
     );
   }

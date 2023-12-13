@@ -1,4 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
+
+import { IErrorResponse, TUserAction } from 'src/app/core/models/general.model';
+
 import { UserActions } from '../actions/user.actions';
 import { StoreActions } from '../actions/store.actions';
 import { ProfileActions } from '../actions/profile.actions';
@@ -21,10 +24,8 @@ export interface State {
   isCreated: boolean;
   isLogged: boolean;
   isLogout: boolean;
-  signinError: boolean;
-  existingEmails: string[];
-  editProfileError: boolean;
-  logoutError: boolean;
+  error: null | IErrorResponse;
+  successAction: null | TUserAction;
 }
 
 export const initialState: State = {
@@ -34,10 +35,8 @@ export const initialState: State = {
   isCreated: false,
   isLogged: false,
   isLogout: false,
-  signinError: false,
-  existingEmails: [],
-  editProfileError: false,
-  logoutError: false,
+  error: null,
+  successAction: null,
 };
 
 export const reducer = createReducer(
@@ -48,6 +47,7 @@ export const reducer = createReducer(
       ...state,
       sendRequest: true,
       isLogout: false,
+      successAction: null,
     })
   ),
   on(
@@ -56,15 +56,17 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       isCreated: redirect,
+      successAction: 'signup',
     })
   ),
   on(
     UserActions.userSignupFailure,
-    (state, { existingEmails }): State => ({
+    (state, { error }): State => ({
       ...state,
       sendRequest: false,
       isCreated: false,
-      existingEmails: [...existingEmails],
+      successAction: null,
+      error: { ...error },
     })
   ),
   on(
@@ -72,14 +74,13 @@ export const reducer = createReducer(
     (state, { savedState }): State => ({
       ...state,
       ...savedState,
-      existingEmails: [],
-      signinError: false,
       isCreated: false,
       isLogged: false,
       sendRequest: false,
-      editProfileError: false,
       userProfile: null,
       isLogout: false,
+      successAction: null,
+      error: null,
     })
   ),
   on(
@@ -87,8 +88,8 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
-      signinError: false,
       isLogout: false,
+      successAction: null,
     })
   ),
   on(
@@ -99,14 +100,16 @@ export const reducer = createReducer(
       isCreated: redirect,
       isLogged: true,
       loginInfo,
+      successAction: 'signin',
     })
   ),
   on(
     UserActions.userSigninFailure,
-    (state, { res }): State => ({
+    (state, { error }): State => ({
       ...state,
       sendRequest: false,
-      signinError: res,
+      successAction: null,
+      error: { ...error },
     })
   ),
   on(
@@ -114,13 +117,15 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
+      successAction: null,
     })
   ),
   on(
     UserActions.userLogoutFailure,
-    (state): State => ({
+    (state, { error }): State => ({
       ...state,
       sendRequest: false,
+      error: { ...error },
     })
   ),
   on(
@@ -133,14 +138,14 @@ export const reducer = createReducer(
       loginInfo: null,
       isLogged: false,
       isCreated: false,
-      existingEmails: [],
-      editProfileError: false,
+      successAction: 'logout',
     })
   ),
   on(
     ProfileActions.profileLoad,
     (state): State => ({
       ...state,
+      successAction: null,
     })
   ),
   on(
@@ -148,13 +153,16 @@ export const reducer = createReducer(
     (state, { userInfo }): State => ({
       ...state,
       userProfile: { ...userInfo },
+      successAction: null,
     })
   ),
   on(
     ProfileActions.profileFailure,
-    (state): State => ({
+    (state, { error }): State => ({
       ...state,
       sendRequest: false,
+      successAction: null,
+      error: { ...error },
     })
   ),
   on(
@@ -162,7 +170,7 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
-      editProfileError: false,
+      successAction: null,
     })
   ),
   on(
@@ -177,15 +185,16 @@ export const reducer = createReducer(
         uid: state.userProfile?.uid || '',
         createdAt: state.userProfile?.createdAt || '',
       },
-      editProfileError: false,
+      successAction: 'profileUpdate',
     })
   ),
   on(
     ProfileActions.profileUpdateFailure,
-    (state): State => ({
+    (state, { error }): State => ({
       ...state,
       sendRequest: false,
-      editProfileError: true,
+      successAction: null,
+      error: { ...error },
     })
   )
 );

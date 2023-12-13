@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { UserActions } from 'src/app/store/actions/user.actions';
 import {
   selectSendRequest,
-  selectExistingEmails,
+  selectSignupExistUserError,
 } from 'src/app/store/selectors/user.selectors';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -86,14 +86,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.store
-      .select(selectExistingEmails)
+      .select(selectSignupExistUserError)
       .pipe(
-        tap((existingEmails) => {
-          const { email } = this.form.controls;
-
-          if (existingEmails.includes(email.value)) {
+        tap((error) => {
+          if (error) {
+            const { email } = this.form.controls;
             email.setErrors({
-              existEmail: 'A user with this email already exists',
+              existEmail: true,
             });
             email.updateValueAndValidity();
           }

@@ -26,9 +26,7 @@ export class UserEffects {
             }
             return UserActions.userSignupSuccess({ redirect: false });
           }),
-          catchError((err) =>
-            of(UserActions.userSignupFailure({ existingEmails: err }))
-          )
+          catchError((error) => of(UserActions.userSignupFailure({ error })))
         )
       )
     );
@@ -67,9 +65,7 @@ export class UserEffects {
               loginInfo: null,
             });
           }),
-          catchError((res: boolean) =>
-            of(UserActions.userSigninFailure({ res }))
-          )
+          catchError((error) => of(UserActions.userSigninFailure({ error })))
         )
       )
     );
@@ -95,7 +91,7 @@ export class UserEffects {
       mergeMap(() =>
         this.authService.logout().pipe(
           map(() => UserActions.userLogoutSuccess({ redirect: true })),
-          catchError(() => of(UserActions.userLogoutFailure({ err: true })))
+          catchError((error) => of(UserActions.userLogoutFailure({ error })))
         )
       )
     );

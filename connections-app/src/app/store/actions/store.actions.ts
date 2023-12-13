@@ -15,7 +15,6 @@ interface State {
   };
   isCreated: boolean;
   isLogged: boolean;
-  existingEmails: string[];
 }
 
 export const StoreActions = createActionGroup({

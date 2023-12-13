@@ -51,7 +51,9 @@ export class ProfileEffects {
               userName: action.userName,
             })
           ),
-          catchError(() => of(ProfileActions.profileUpdateFailure()))
+          catchError((error) =>
+            of(ProfileActions.profileUpdateFailure({ error }))
+          )
         )
       )
     );

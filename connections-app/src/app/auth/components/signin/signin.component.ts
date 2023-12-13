@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { UserActions } from 'src/app/store/actions/user.actions';
 import {
   selectSendRequest,
-  selectSigninError,
+  selectSigninNotFoundError,
 } from 'src/app/store/selectors/user.selectors';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -72,19 +72,21 @@ export class SigninComponent implements OnInit, OnDestroy {
     });
 
     this.subscription = this.store
-      .select(selectSigninError)
+      .select(selectSigninNotFoundError)
       .pipe(
         tap((signinError) => {
-          const { email, password } = this.form.controls;
-
           if (signinError) {
-            email.setErrors({
-              notFound: true,
-            });
-            password.setErrors({
-              notFound: true,
-            });
-            this.form.updateValueAndValidity();
+            const { email, password } = this.form.controls;
+
+            if (signinError) {
+              email.setErrors({
+                notFound: true,
+              });
+              password.setErrors({
+                notFound: true,
+              });
+              this.form.updateValueAndValidity();
+            }
           }
         })
       )
