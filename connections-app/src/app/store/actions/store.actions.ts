@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
 interface State {
   sendRequest: boolean;
@@ -13,13 +13,12 @@ interface State {
     uid: string;
     createdAt: string;
   };
-  isCreated: boolean;
-  isLogged: boolean;
 }
 
 export const StoreActions = createActionGroup({
   source: 'Store',
   events: {
     'Store Update': props<{ savedState: State }>(),
+    'Store Change Theme': emptyProps(),
   },
 });

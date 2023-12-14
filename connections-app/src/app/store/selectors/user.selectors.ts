@@ -16,16 +16,6 @@ export const selectSendRequest = createSelector(
   (state: State) => state.sendRequest
 );
 
-export const selectCreatedFlag = createSelector(
-  selectAuthState,
-  (state: State) => state.isCreated
-);
-
-export const selectLoggedFlag = createSelector(
-  selectAuthState,
-  (state: State) => state.isLogged
-);
-
 export const selectSignupExistUserError = createSelector(
   selectAuthState,
   (state: State) => {
@@ -88,4 +78,9 @@ export const selectError = createSelector(
 export const selectSuccessAction = createSelector(
   selectAuthState,
   (state: State) => state.successAction
+);
+
+export const selectThemeValue = createSelector(
+  selectAuthState,
+  (state: State) => state.darkTheme
 );

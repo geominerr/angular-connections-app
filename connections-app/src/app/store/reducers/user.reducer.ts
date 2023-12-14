@@ -21,9 +21,7 @@ export interface State {
     uid: string;
     createdAt: string;
   };
-  isCreated: boolean;
-  isLogged: boolean;
-  isLogout: boolean;
+  darkTheme: boolean;
   error: null | IErrorResponse;
   successAction: null | TUserAction;
 }
@@ -32,9 +30,7 @@ export const initialState: State = {
   sendRequest: false,
   loginInfo: null,
   userProfile: null,
-  isCreated: false,
-  isLogged: false,
-  isLogout: false,
+  darkTheme: false,
   error: null,
   successAction: null,
 };
@@ -46,16 +42,15 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
-      isLogout: false,
       successAction: null,
+      error: null,
     })
   ),
   on(
     UserActions.userSignupSuccess,
-    (state, { redirect }): State => ({
+    (state): State => ({
       ...state,
       sendRequest: false,
-      isCreated: redirect,
       successAction: 'signup',
     })
   ),
@@ -64,7 +59,6 @@ export const reducer = createReducer(
     (state, { error }): State => ({
       ...state,
       sendRequest: false,
-      isCreated: false,
       successAction: null,
       error: { ...error },
     })
@@ -74,13 +68,17 @@ export const reducer = createReducer(
     (state, { savedState }): State => ({
       ...state,
       ...savedState,
-      isCreated: false,
-      isLogged: false,
       sendRequest: false,
       userProfile: null,
-      isLogout: false,
       successAction: null,
       error: null,
+    })
+  ),
+  on(
+    StoreActions.storeChangeTheme,
+    (state): State => ({
+      ...state,
+      darkTheme: !state.darkTheme,
     })
   ),
   on(
@@ -88,17 +86,15 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       sendRequest: true,
-      isLogout: false,
       successAction: null,
+      error: null,
     })
   ),
   on(
     UserActions.userSigninSuccess,
-    (state, { redirect, loginInfo }): State => ({
+    (state, { loginInfo }): State => ({
       ...state,
       sendRequest: false,
-      isCreated: redirect,
-      isLogged: true,
       loginInfo,
       successAction: 'signin',
     })
@@ -118,6 +114,7 @@ export const reducer = createReducer(
       ...state,
       sendRequest: true,
       successAction: null,
+      error: null,
     })
   ),
   on(
@@ -132,12 +129,9 @@ export const reducer = createReducer(
     UserActions.userLogoutSuccess,
     (state): State => ({
       ...state,
-      isLogout: true,
       sendRequest: false,
       userProfile: null,
       loginInfo: null,
-      isLogged: false,
-      isCreated: false,
       successAction: 'logout',
     })
   ),
@@ -146,6 +140,7 @@ export const reducer = createReducer(
     (state): State => ({
       ...state,
       successAction: null,
+      error: null,
     })
   ),
   on(
@@ -171,6 +166,7 @@ export const reducer = createReducer(
       ...state,
       sendRequest: true,
       successAction: null,
+      error: null,
     })
   ),
   on(

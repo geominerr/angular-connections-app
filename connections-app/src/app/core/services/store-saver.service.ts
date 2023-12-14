@@ -33,11 +33,14 @@ export class StoreSaverService {
       .pipe(
         tap((state: State) => {
           console.log('State changed ', (this.counter += 1), state);
-          if (!state?.isLogout) {
-            localStorage.setItem(this.localStorageKey, JSON.stringify(state));
-          } else {
-            localStorage.removeItem(this.localStorageKey);
+          if (state?.successAction === 'logout') {
+            return localStorage.removeItem(this.localStorageKey);
           }
+
+          return localStorage.setItem(
+            this.localStorageKey,
+            JSON.stringify(state)
+          );
         })
       )
       .subscribe();
