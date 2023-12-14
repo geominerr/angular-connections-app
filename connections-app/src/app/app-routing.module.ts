@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardLogged } from './auth/guards/auth-logged.guard';
 import { AuthGuardNotLogged } from './auth/guards/auth-not-logged.guard';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
         (m) => m.ProfilePageComponent
       ),
     canActivate: [AuthGuardNotLogged],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

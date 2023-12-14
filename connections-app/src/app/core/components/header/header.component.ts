@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() isMenuOpen: boolean = false;
 
-  title: string = 'Polymer';
+  title: string = 'Connections';
 
   constructor(private router: Router, private store: Store) {}
 
@@ -65,5 +65,9 @@ export class HeaderComponent implements OnInit {
 
   navigateToProfile(): void {
     this.router.navigate(['/profile']);
+  }
+
+  navigateToMainPage(): void {
+    this.router.navigate(['/']);
   }
 }

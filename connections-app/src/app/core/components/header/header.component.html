@@ -13,7 +13,9 @@
   >
     <mat-icon class="mat-icon">menu</mat-icon>
   </button>
-  <span>{{ title }}</span>
+  <button mat-button color="basic" (click)="navigateToMainPage()">
+    {{ title }}
+  </button>
   <span class="example-spacer"></span>
   <ng-container *ngIf="isLogin$ | async">
     <button
