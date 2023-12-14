@@ -59,13 +59,12 @@
 
     --mdc-filled-text-field-disabled-input-text-color: rgb(44, 44, 44);
     --mdc-filled-text-field-disabled-label-text-color: rgb(77, 77, 77);
-    --mdc-filled-text-field-caret-color: red;
-  }
+    --mdc-filled-text-field-caret-color: rgb(0, 0, 0);
 
-  .edit-mode {
-    .mat-form-field-appearance-outline.mat-focused
-      .mat-form-field-outline-thick {
-      color: red !important;
+    &:host-context(.dark-theme) {
+      --mdc-filled-text-field-disabled-input-text-color: rgb(252, 250, 250);
+      --mdc-filled-text-field-disabled-label-text-color: rgb(255, 255, 255);
+      --mdc-filled-text-field-caret-color: rgb(0, 0, 0);
     }
   }
 

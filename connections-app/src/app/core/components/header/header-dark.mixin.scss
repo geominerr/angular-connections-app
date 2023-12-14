@@ -1,0 +1,12 @@
+@mixin dark-header($bg-color, $text-color) {
+  .mat-toolbar {
+    color: $text-color;
+
+    background-color: $bg-color;
+    box-shadow: none;
+  }
+
+  .mat-icon {
+    color: $text-color;
+  }
+}

@@ -10,50 +10,56 @@
       <mat-list-item>
         <li class="mat-list-item">
           <mat-icon>group_add</mat-icon>
-          <span>Add group</span>
+          <span class="mat-list-item__title">Add group</span>
         </li>
       </mat-list-item>
       <mat-list-item>
         <li class="mat-list-item">
           <mat-icon>group</mat-icon>
-          <span>Your groups</span>
+          <span class="mat-list-item__title">Your groups</span>
         </li>
       </mat-list-item>
       <mat-list-item>
         <li class="mat-list-item">
           <mat-icon>account_circle</mat-icon>
-          <span>Contacts</span>
+          <span class="mat-list-item__title">Contacts</span>
         </li>
       </mat-list-item>
       <mat-list-item>
         <li class="mat-list-item">
           <mat-icon>call</mat-icon>
-          <span>Call</span>
+          <span class="mat-list-item__title">Call</span>
         </li>
       </mat-list-item>
       <mat-list-item>
         <li class="mat-list-item">
           <mat-icon>settings</mat-icon>
-          <span>Settings</span>
+          <span class="mat-list-item__title">Settings</span>
         </li>
       </mat-list-item>
     </ng-container>
     <mat-list-item>
       <li class="mat-list-item">
         <mat-icon>dark_mode</mat-icon>
-        <span>Night mode</span>
+        <span class="mat-list-item__title">Night mode</span>
         <mat-slide-toggle
           class="mat-slide-toggle"
           color="primary"
+          (toggleChange)="changeTheme()"
+          [checked]="darkTheme$ | async"
         ></mat-slide-toggle>
       </li>
     </mat-list-item>
   </mat-nav-list>
-  <mat-nav-list class="mat-nav-list mat-nav-list--last" *ngIf="isLogin$ | async">
+  <mat-nav-list
+    class="mat-nav-list mat-nav-list--last"
+    *ngIf="isLogin$ | async"
+    (click)="logout()"
+  >
     <mat-list-item>
       <li class="mat-list-item">
         <mat-icon>logout</mat-icon>
-        <span>Logout</span>
+        <span class="mat-list-item__title">Logout</span>
       </li>
     </mat-list-item>
   </mat-nav-list>

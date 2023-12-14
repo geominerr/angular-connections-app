@@ -11,8 +11,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectUserName } from 'src/app/store/selectors/user.selectors';
+import {
+  selectUserName,
+  selectThemeValue,
+} from 'src/app/store/selectors/user.selectors';
 import { UserActions } from 'src/app/store/actions/user.actions';
+import { StoreActions } from 'src/app/store/actions/store.actions';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,12 +33,21 @@ export class SidebarComponent implements OnInit {
 
   @Input() isOpen: boolean = true;
 
+  darkTheme$: Observable<boolean> = of(false);
+
   guestName: string = 'Guest';
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.userName$ = this.store.select(selectUserName);
+    this.darkTheme$ = this.store.select(selectThemeValue);
+  }
+
+  changeTheme(): void {
+    this.store.dispatch(
+      StoreActions.storeChangeTheme()
+    );
   }
 
   logout(): void {
