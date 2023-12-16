@@ -1,15 +1,18 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { IErrorResponse, TUserAction } from 'src/app/core/models/general.model';
+import { IGroupItem } from 'src/app/connections/models/connections.model';
 
 import { UserActions } from '../actions/user.actions';
 import { StoreActions } from '../actions/store.actions';
 import { ProfileActions } from '../actions/profile.actions';
+import { GroupActions } from '../actions/groups.action';
 
 export const userFeatureKey = 'user';
 
 export interface State {
   sendRequest: boolean;
+  groups: null | IGroupItem[];
   loginInfo: null | {
     token: string;
     uid: string;
@@ -28,6 +31,7 @@ export interface State {
 
 export const initialState: State = {
   sendRequest: false,
+  groups: null,
   loginInfo: null,
   userProfile: null,
   darkTheme: false,
@@ -72,6 +76,7 @@ export const reducer = createReducer(
       userProfile: null,
       successAction: null,
       error: null,
+      groups: null,
     })
   ),
   on(
@@ -186,6 +191,122 @@ export const reducer = createReducer(
   ),
   on(
     ProfileActions.profileUpdateFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    GroupActions.groupLoad,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(
+    GroupActions.groupLoadSuccess,
+    (state, { items }): State => ({
+      ...state,
+      sendRequest: false,
+      groups: [...items],
+      successAction: 'groupList',
+    })
+  ),
+  on(
+    GroupActions.groupLoadFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    GroupActions.groupCreate,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(GroupActions.groupCreateSuccess, (state, { name, groupID }): State => {
+    const createdBy: string = state.loginInfo?.uid as string;
+    const newGroup: IGroupItem = {
+      name,
+      id: groupID,
+      createdBy,
+    };
+
+    return {
+      ...state,
+      sendRequest: false,
+      successAction: 'groupCreate',
+      groups: [newGroup, ...(state.groups || [])],
+      error: null,
+    };
+  }),
+  on(
+    GroupActions.groupCreateFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    GroupActions.groupRemove,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      successAction: null,
+      error: null,
+    })
+  ),
+  on(
+    GroupActions.groupRemoveSuccess,
+    (state, { groupID }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: 'groupRemove',
+      error: null,
+      groups: [...(state?.groups?.filter((item) => item.id !== groupID) || [])],
+    })
+  ),
+  on(
+    GroupActions.groupRemoveFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    GroupActions.groupUpdate,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(
+    GroupActions.groupUpdateSuccess,
+    (state, { items }): State => ({
+      ...state,
+      sendRequest: false,
+      groups: [...items],
+      successAction: 'groupUpdate',
+    })
+  ),
+  on(
+    GroupActions.groupUpdateFailure,
     (state, { error }): State => ({
       ...state,
       sendRequest: false,

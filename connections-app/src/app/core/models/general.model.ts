@@ -19,7 +19,11 @@ export type TUserAction =
   | 'signup'
   | 'profile'
   | 'profileUpdate'
-  | 'logout';
+  | 'logout'
+  | 'groupList'
+  | 'groupCreate'
+  | 'groupRemove'
+  | 'groupUpdate';
 
 export interface IActionMessage {
   success: string;

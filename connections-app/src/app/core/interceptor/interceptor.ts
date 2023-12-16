@@ -18,6 +18,7 @@ export class Interceptor implements HttpInterceptor {
   mapEndpoints: Record<string, boolean> = {
     profile: true,
     logout: true,
+    groups: true,
   };
 
   intercept(
@@ -40,7 +41,7 @@ export class Interceptor implements HttpInterceptor {
       };
     }
 
-    if (this.mapEndpoints?.[req.url] && headers) {
+    if (this.mapEndpoints?.[req.url.split('/')[0]] && headers) {
       const modifiedReq = req.clone({
         url: `${this.baseUrl}${req.url}`,
         setHeaders: { ...headers },

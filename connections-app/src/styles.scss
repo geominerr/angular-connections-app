@@ -31,6 +31,21 @@ body {
   }
 }
 
+// custom scrollbar
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #717171;
+}
+
 // DARK THEME
 
 $bg-color: #242424;
@@ -141,5 +156,20 @@ $box-shadow-sidebar: #9f9f9faa;
     .mdc-text-field--disabled .mdc-floating-label--float-above {
       color: $disabled-label-color;
     }
+  }
+
+  // dark scrollbar
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #2f2f2f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbcbcbc5;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #636363;
   }
 }

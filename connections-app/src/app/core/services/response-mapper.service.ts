@@ -42,6 +42,30 @@ export class ResponseMapperService {
         typeError: 'errorMesage',
       },
     },
+    groupList: {
+      success: 'Group list successfully received',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    groupCreate: {
+      success: 'Group created successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    groupRemove: {
+      success: 'Group deleted successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    groupUpdate: {
+      success: 'Group list updated successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
   };
 
   getSuccessMessage(action: TUserAction): string {

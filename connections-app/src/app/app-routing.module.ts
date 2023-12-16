@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./connections/components/main/main.component').then(
-        (m) => m.MainComponent
+      import('./connections/pages/main/main-page.component').then(
+        (m) => m.MainPageComponent
       ),
     canActivate: [AuthGuardNotLogged],
   },
@@ -34,6 +34,14 @@ const routes: Routes = [
     loadComponent: () =>
       import('./profile/components/profile-page/profile-page.component').then(
         (m) => m.ProfilePageComponent
+      ),
+    canActivate: [AuthGuardNotLogged],
+  },
+  {
+    path: 'group/:groupID',
+    loadComponent: () =>
+      import('./connections/pages/dialog-page/dialog-page.component').then(
+        (m) => m.DialogPageComponent
       ),
     canActivate: [AuthGuardNotLogged],
   },

@@ -84,3 +84,8 @@ export const selectThemeValue = createSelector(
   selectAuthState,
   (state: State) => state.darkTheme
 );
+
+export const selectUserId = createSelector(
+  selectAuthState,
+  (state: State) => state?.loginInfo?.uid
+);
