@@ -24,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { Observable, Subscription, tap } from 'rxjs';
 
@@ -48,7 +47,6 @@ import { AuthService } from '../../services/auth.service';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
 })

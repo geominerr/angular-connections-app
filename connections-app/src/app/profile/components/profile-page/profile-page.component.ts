@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NgIf, AsyncPipe } from '@angular/common';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
@@ -17,7 +15,7 @@ import { IUserProfile } from '../../models/profile.model';
   styleUrls: ['./profile-page.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIf, AsyncPipe, ProfileComponent, MatProgressSpinnerModule],
+  imports: [NgIf, AsyncPipe, ProfileComponent],
 })
 export class ProfilePageComponent implements OnInit {
   userProfile$!: Observable<IUserProfile | null>;

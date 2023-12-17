@@ -45,3 +45,7 @@
     <mat-icon class="mat-icon">login</mat-icon>
   </button>
 </mat-toolbar>
+<mat-progress-bar
+  *ngIf="sendRequest$ | async"
+  mode="indeterminate"
+></mat-progress-bar>

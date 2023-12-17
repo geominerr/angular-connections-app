@@ -10,10 +10,14 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectAuthStatus } from 'src/app/store/selectors/user.selectors';
+import {
+  selectAuthStatus,
+  selectSendRequest,
+} from 'src/app/store/selectors/user.selectors';
 
 import { OutsideClickDirective } from 'src/app/core/directives/outside-click.directive';
 import { SidebarComponent } from '../sidebar/sidebar.component';
@@ -30,6 +34,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatProgressBarModule,
     SidebarComponent,
     OutsideClickDirective,
   ],
@@ -39,12 +44,15 @@ export class HeaderComponent implements OnInit {
 
   @Output() isMenuOpen: boolean = false;
 
+  sendRequest$!: Observable<boolean>;
+
   title: string = 'Connections';
 
   constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.isLogin$ = this.store.select(selectAuthStatus);
+    this.sendRequest$ = this.store.select(selectSendRequest);
   }
 
   toggleMenu(event: Event): void {

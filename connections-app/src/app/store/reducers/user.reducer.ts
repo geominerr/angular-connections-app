@@ -149,6 +149,9 @@ export const reducer = createReducer(
       sendRequest: false,
       userProfile: null,
       loginInfo: null,
+      groups: null,
+      users: null,
+      conversation: null,
       successAction: 'logout',
     })
   ),
@@ -156,6 +159,7 @@ export const reducer = createReducer(
     ProfileActions.profileLoad,
     (state): State => ({
       ...state,
+      sendRequest: true,
       successAction: null,
       error: null,
     })
@@ -164,6 +168,7 @@ export const reducer = createReducer(
     ProfileActions.profileSuccess,
     (state, { userInfo }): State => ({
       ...state,
+      sendRequest: false,
       userProfile: { ...userInfo },
       successAction: null,
     })
@@ -214,7 +219,7 @@ export const reducer = createReducer(
     GroupActions.groupLoad,
     (state): State => ({
       ...state,
-      sendRequest: true,
+      // sendRequest: true,
       error: null,
       successAction: null,
     })
@@ -330,7 +335,7 @@ export const reducer = createReducer(
     ConversationActions.loadUsers,
     (state): State => ({
       ...state,
-      sendRequest: false,
+      // sendRequest: true,
       error: null,
       successAction: null,
     })
@@ -357,6 +362,7 @@ export const reducer = createReducer(
     ConversationActions.loadConversation,
     (state): State => ({
       ...state,
+      sendRequest: true,
       error: null,
       successAction: null,
     })
@@ -375,7 +381,7 @@ export const reducer = createReducer(
           return acc;
         }, {} as Record<string, { conversationID: string }>),
       },
-      successAction: 'conversationsList',
+      successAction: null,
     })
   ),
   on(
