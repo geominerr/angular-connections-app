@@ -7,3 +7,8 @@ export const selectGroupTimer = createSelector(
   selectState,
   (state: State) => state.groupTimer
 );
+
+export const selectUserTimer = createSelector(
+  selectState,
+  (state: State) => state.userTimer
+);

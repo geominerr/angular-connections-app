@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
+import { groupResponseConverter } from '../utils/response-converter.util';
 import { IGroupItem, IGroupsResponse } from '../models/connections.model';
-import { groupResponseConverter } from '../utils/group-response-converter.util';
 
 @Injectable({
   providedIn: 'root',

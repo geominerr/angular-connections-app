@@ -10,6 +10,7 @@ import { UserEffects } from './effects/user.effects';
 import { ProfileEffects } from './effects/profile.effects';
 import { GroupEffects } from './effects/group.effects';
 import { TimerEffects } from './effects/timer.effects';
+import { ConversationEffects } from './effects/conversation.effects';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { TimerEffects } from './effects/timer.effects';
       ProfileEffects,
       GroupEffects,
       TimerEffects,
+      ConversationEffects,
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

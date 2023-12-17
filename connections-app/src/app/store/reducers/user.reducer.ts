@@ -1,18 +1,25 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { IErrorResponse, TUserAction } from 'src/app/core/models/general.model';
-import { IGroupItem } from 'src/app/connections/models/connections.model';
+import {
+  IGroupItem,
+  IUserItem,
+} from 'src/app/connections/models/connections.model';
 
 import { UserActions } from '../actions/user.actions';
 import { StoreActions } from '../actions/store.actions';
 import { ProfileActions } from '../actions/profile.actions';
 import { GroupActions } from '../actions/groups.action';
+import { ConversationActions } from '../actions/conversation.actions';
 
 export const userFeatureKey = 'user';
 
 export interface State {
   sendRequest: boolean;
   groups: null | IGroupItem[];
+  users: null | IUserItem[];
+  conversation: null | Record<string, { conversationID: string }>;
+  currentConversation: null | string;
   loginInfo: null | {
     token: string;
     uid: string;
@@ -32,6 +39,9 @@ export interface State {
 export const initialState: State = {
   sendRequest: false,
   groups: null,
+  users: null,
+  conversation: null,
+  currentConversation: null,
   loginInfo: null,
   userProfile: null,
   darkTheme: false,
@@ -76,7 +86,9 @@ export const reducer = createReducer(
       userProfile: null,
       successAction: null,
       error: null,
-      groups: null,
+      // groups: null,
+      // users: null,
+      // conversation: null,
     })
   ),
   on(
@@ -307,6 +319,116 @@ export const reducer = createReducer(
   ),
   on(
     GroupActions.groupUpdateFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    ConversationActions.loadUsers,
+    (state): State => ({
+      ...state,
+      sendRequest: false,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(
+    ConversationActions.loadUsersSuccess,
+    (state, { users }): State => ({
+      ...state,
+      sendRequest: false,
+      users: [...users],
+      successAction: 'userList',
+    })
+  ),
+  on(
+    ConversationActions.loadUsersFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    ConversationActions.loadConversation,
+    (state): State => ({
+      ...state,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(
+    ConversationActions.loadConversationSuccess,
+    (state, { conversations }): State => ({
+      ...state,
+      sendRequest: false,
+      conversation: {
+        ...conversations.reduce((acc, curr) => {
+          acc[curr.companionID] = {
+            conversationID: curr.companionID,
+          };
+
+          return acc;
+        }, {} as Record<string, { conversationID: string }>),
+      },
+      successAction: 'conversationsList',
+    })
+  ),
+  on(
+    ConversationActions.loadConversationFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    ConversationActions.updateUsers,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      error: null,
+      successAction: null,
+    })
+  ),
+  on(
+    ConversationActions.updateUsersSuccess,
+    (state, { users }): State => ({
+      ...state,
+      sendRequest: false,
+      users: [...users],
+      successAction: 'userListUpdate',
+    })
+  ),
+  on(
+    ConversationActions.updateUsersFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    ConversationActions.createConversationSuccess,
+    (state, { id, companionID }): State => ({
+      ...state,
+      sendRequest: false,
+      error: null,
+      successAction: null,
+      conversation: {
+        ...state.conversation,
+        [companionID]: { conversationID: id },
+      },
+    })
+  ),
+  on(
+    ConversationActions.createConversationFailure,
     (state, { error }): State => ({
       ...state,
       sendRequest: false,

@@ -23,7 +23,10 @@ export type TUserAction =
   | 'groupList'
   | 'groupCreate'
   | 'groupRemove'
-  | 'groupUpdate';
+  | 'groupUpdate'
+  | 'userList'
+  | 'userListUpdate'
+  | 'conversationsList';
 
 export interface IActionMessage {
   success: string;

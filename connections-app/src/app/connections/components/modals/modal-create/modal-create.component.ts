@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 
 import { Store } from '@ngrx/store';
 import { GroupActions } from 'src/app/store/actions/groups.action';
+import { selectSuccessAction } from 'src/app/store/selectors/user.selectors';
+
+import { Subscription, tap } from 'rxjs';
 
 import { groupNameValidator } from 'src/app/connections/utils/group-name-validator.util';
 
@@ -24,8 +32,10 @@ import { groupNameValidator } from 'src/app/connections/utils/group-name-validat
     MatButtonModule,
   ],
 })
-export class ModalCreateComponent implements OnInit {
+export class ModalCreateComponent implements OnInit, OnDestroy {
   form!: FormGroup;
+
+  subscription!: Subscription;
 
   constructor(
     private dialogRef: MatDialogRef<ModalCreateComponent>,
@@ -37,6 +47,21 @@ export class ModalCreateComponent implements OnInit {
     this.form = this.fb.group({
       groupName: ['', [groupNameValidator]],
     });
+
+    this.subscription = this.store
+      .select(selectSuccessAction)
+      .pipe(
+        tap((action) => {
+          if (action === 'groupCreate') {
+            this.dialogRef.close();
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   getErrorMessage(): string | null {
@@ -54,6 +79,5 @@ export class ModalCreateComponent implements OnInit {
     const name: string = this.form.controls['groupName'].value;
 
     this.store.dispatch(GroupActions.groupCreate({ name }));
-    this.dialogRef.close();
   }
 }

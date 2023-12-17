@@ -38,11 +38,19 @@ const routes: Routes = [
     canActivate: [AuthGuardNotLogged],
   },
   {
-    path: 'group/:groupID',
+    path: 'group/:id',
     loadComponent: () =>
       import('./connections/pages/dialog-page/dialog-page.component').then(
         (m) => m.DialogPageComponent
       ),
+    canActivate: [AuthGuardNotLogged],
+  },
+  {
+    path: 'conversation/:id',
+    loadComponent: () =>
+      import(
+        './connections/pages/conversation-page/conversation-page.component'
+      ).then((m) => m.ConversationPageComponent),
     canActivate: [AuthGuardNotLogged],
   },
   {

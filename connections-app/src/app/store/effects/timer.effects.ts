@@ -20,10 +20,32 @@ export class TimerEffects {
 
               return TimerActions.timerGroupUpdate();
             }
-            console.log('end pipe', startTime);
+
             return TimerActions.timerGroupStop();
           }),
           takeUntil(this.actions$.pipe(ofType(TimerActions.timerGroupStop)))
+        );
+      })
+    );
+  });
+
+  startUserTimer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TimerActions.timerUserStart),
+      switchMap((action) => {
+        let startTime: number = action.timeDuration;
+
+        return interval(1000).pipe(
+          map(() => {
+            if (startTime > 0) {
+              startTime -= 1;
+
+              return TimerActions.timerUserUpdate();
+            }
+
+            return TimerActions.timerUserStop();
+          }),
+          takeUntil(this.actions$.pipe(ofType(TimerActions.timerUserStop)))
         );
       })
     );

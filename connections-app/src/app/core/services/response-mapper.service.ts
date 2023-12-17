@@ -66,6 +66,24 @@ export class ResponseMapperService {
         typeError: 'errorMesage',
       },
     },
+    userList: {
+      success: 'User list successfully received',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    userListUpdate: {
+      success: 'User list updated successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    conversationsList: {
+      success: 'Conversations list successfully received',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
   };
 
   getSuccessMessage(action: TUserAction): string {

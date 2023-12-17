@@ -19,6 +19,8 @@ export class Interceptor implements HttpInterceptor {
     profile: true,
     logout: true,
     groups: true,
+    users: true,
+    conversations: true,
   };
 
   intercept(
