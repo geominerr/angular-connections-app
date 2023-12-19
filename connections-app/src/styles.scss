@@ -173,4 +173,67 @@ $box-shadow-sidebar: #9f9f9faa;
   ::-webkit-scrollbar-thumb:hover {
     background: #636363;
   }
+  .group-list {
+    .groups {
+      border-right: 0.1rem solid rgba(241, 241, 241, 0.2);
+
+      &__list {
+        border-top: 0.1rem solid rgba(241, 241, 241, 0.2);
+      }
+    }
+
+    .mat {
+      &-list-item__title,
+      &-icon {
+        color: rgb(236, 236, 236);
+      }
+    }
+
+    .circle {
+      border: 0.1rem solid rgba(241, 241, 241, 0.2);
+    }
+  }
+
+  .user-list {
+    .users {
+      border-right: 0.1rem solid rgba(241, 241, 241, 0.2);
+
+      &__list {
+        border-top: 0.1rem solid rgba(241, 241, 241, 0.2);
+      }
+    }
+
+    .mat {
+      &-list-item__title,
+      &-icon {
+        color: rgb(236, 236, 236);
+      }
+    }
+
+    .circle {
+      border: 0.1rem solid rgba(241, 241, 241, 0.2);
+    }
+  }
+
+  .group-dialog,
+  .conversation {
+    background-color: #232323;
+    border: 0.1rem solid rgba(233, 233, 233, 0.8);
+
+    &__list {
+      border-top: 0.1rem solid rgba(233, 233, 233, 0.8);
+      border-bottom: 0.1rem solid rgba(233, 233, 233, 0.8);
+    }
+  }
+  .router-link-1 {
+    color: rgb(197, 197, 197);
+  }
+
+  .form {
+    mat-form-field {
+      input {
+        background-color: #bcbcbc;
+      }
+    }
+  }
 }

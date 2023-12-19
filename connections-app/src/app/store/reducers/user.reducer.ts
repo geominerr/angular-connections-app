@@ -222,7 +222,7 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       groups: [...items],
-      successAction: 'groupList',
+      successAction: null,
     })
   ),
   on(
