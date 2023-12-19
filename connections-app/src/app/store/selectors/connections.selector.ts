@@ -1,6 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { IUserItemWithConversation } from 'src/app/connections/models/connections.model';
 import { State, userFeatureKey } from '../reducers/user.reducer';
+import { State as ConversationState } from '../reducers/conversation.reducer';
+import { selectConversationState } from './conversation.selectors';
 
 const selectState = createFeatureSelector<State>(userFeatureKey);
 
@@ -16,8 +18,9 @@ export const selectUserList = createSelector(
 
 export const selectUserListNew = createSelector(
   selectState,
-  (state: State): IUserItemWithConversation[] => {
-    const conversations = state.conversation;
+  selectConversationState,
+  (state: State, state2: ConversationState): IUserItemWithConversation[] => {
+    const conversations = state2.conversations;
     const currentUserID = state.loginInfo?.uid;
 
     const res = state?.users
@@ -34,7 +37,7 @@ export const selectUserListNew = createSelector(
   }
 );
 
-export const selectConversations = createSelector(
-  selectState,
-  (state: State) => state.conversation
-);
+// export const selectConversations = createSelector(
+//   selectState,
+//   (state: State) => state.conversation
+// );

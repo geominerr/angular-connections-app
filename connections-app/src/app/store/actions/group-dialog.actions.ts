@@ -1,8 +1,5 @@
 import { createActionGroup, props } from '@ngrx/store';
-import {
-  IGroupDialog,
-  IGroupMessageNew,
-} from 'src/app/connections/models/group-dialog.model';
+import { IGroupDialog } from 'src/app/connections/models/group-dialog.model';
 import { IErrorResponse } from 'src/app/core/models/general.model';
 
 export const GroupDialogActions = createActionGroup({
@@ -25,8 +22,8 @@ export const GroupDialogActions = createActionGroup({
     }>(),
     'Update GroupDialog Failure': props<{ error: IErrorResponse }>(),
     'Delete Dialog': props<{ groupID: string }>(),
-    'Send Message': props<IGroupMessageNew>(),
-    'Send Message Success': props<IGroupMessageNew>(),
+    'Send Message': props<{ groupID: string; message: string }>(),
+    'Send Message Success': props<{ groupID: string }>(),
     'Send Message Failure': props<{ error: IErrorResponse }>(),
   },
 });

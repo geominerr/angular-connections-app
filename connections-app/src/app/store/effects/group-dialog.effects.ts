@@ -1,16 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import {
-  switchMap,
-  map,
-  mergeMap,
-  catchError,
-  of,
-  take,
-  filter,
-  concat,
-} from 'rxjs';
+import { switchMap, map, mergeMap, catchError, of, take } from 'rxjs';
 import {
   IGroupDialog,
   IGroupDialogParams,
@@ -34,7 +25,6 @@ export class GroupDialogEffects {
       switchMap((action) =>
         this.store.select(selectGroupDialog(action.groupID)).pipe(
           take(1),
-          filter((dialog) => !dialog),
           mergeMap((dialog) => {
             const params: IGroupDialogParams = { groupID: action.groupID };
             const since = dialog?.since;
@@ -88,6 +78,58 @@ export class GroupDialogEffects {
                   timeDuration: 60,
                 }),
               ]),
+              catchError((error) =>
+                of(GroupDialogActions.updateGroupDialogFailure({ error }))
+              )
+            );
+          })
+        )
+      )
+    );
+  });
+
+  sendMessage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupDialogActions.sendMessage),
+      switchMap((action) =>
+        this.groupService
+          .sendMessage({
+            groupID: action.groupID,
+            message: action.message,
+          })
+          .pipe(
+            map(() =>
+              GroupDialogActions.sendMessageSuccess({
+                groupID: action.groupID,
+              })
+            ),
+            catchError((error) =>
+              of(GroupDialogActions.sendMessageFailure({ error }))
+            )
+          )
+      )
+    );
+  });
+
+  reloadMessages$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupDialogActions.sendMessageSuccess),
+      switchMap((action) =>
+        this.store.select(selectGroupDialog(action.groupID)).pipe(
+          take(1),
+          mergeMap((dialog) => {
+            const params: IGroupDialogParams = {
+              groupID: action.groupID,
+              since: dialog?.since,
+            };
+
+            return this.groupService.loadGroupMessage(params).pipe(
+              map((res: IGroupDialog) =>
+                GroupDialogActions.updateGroupDialogSuccess({
+                  groupID: action.groupID,
+                  groupDialog: res,
+                })
+              ),
               catchError((error) =>
                 of(GroupDialogActions.updateGroupDialogFailure({ error }))
               )

@@ -20,11 +20,18 @@ interface DialogState {
   groupDialogs: Record<string, IGroupDialog>;
 }
 
+interface ConversationState {
+  conversations: Record<string, { conversationID: string }> | null;
+}
+
 export const StoreActions = createActionGroup({
   source: 'Store',
   events: {
     'Store Update': props<{ savedState: State }>(),
     'Store Change Theme': emptyProps(),
     'Store Update Dialogs': props<{ savedDialogs: DialogState }>(),
+    'Store Update Conversations': props<{
+      savedConversations: ConversationState;
+    }>(),
   },
 });

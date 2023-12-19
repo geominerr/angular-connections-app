@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="conversation">
+    <h3 class="conversation__title">Conversation</h3>
+    <a routerLink="/" class="router-link">Back to home</a>
+    <div class="conversation__btn-wrapper">
+      <div class="conversation__timer-wrapper">
+        <button
+          class="mat-button--custom"
+          mat-raised-button
+          [disabled]="!!(timer$ | async)"
+          (click)="updateConversation()"
+        >
+          Update
+        </button>
+        <span class="conversation__timer">{{ (timer$ | async) || null }}</span>
+      </div>
+      <button
+        class="mat-button--custom"
+        color="warn"
+        mat-raised-button
+        *ngIf="conversation$ | async"
+        (click)="removeConversation()"
+      >
+        Delete
+      </button>
+    </div>
+    <div class="conversation__list">
+      <ng-container *ngIf="(conversation$ | async)?.length">
+        <ng-container *ngFor="let message of conversation$ | async">
+          <app-message [itemData]="message"></app-message>
+        </ng-container>
+      </ng-container>
+    </div>
+    <app-input-message
+      class="app-input-message"
+      [conversationID]="conversationID"
+      [userID]="userID$ | async"
+    ></app-input-message>
+  </div>
+</div>

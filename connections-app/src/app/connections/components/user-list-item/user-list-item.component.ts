@@ -35,7 +35,6 @@ export class UserListItemComponent implements OnInit {
   }
 
   navigateToConversationPage(): void {
-    console.log(this.itemData.name);
     this.store.dispatch(
       ConversationActions.openConversation({ companionID: this.itemData.uid })
     );

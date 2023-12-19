@@ -18,8 +18,6 @@ export class ProfileService {
   getProfile(): Observable<IUserProfile> {
     return this.httpClient.get<IProfile>('profile').pipe(
       map((res: IProfile) => {
-        console.log(res);
-
         return {
           email: res?.email?.S,
           name: res?.name?.S,
@@ -43,8 +41,7 @@ export class ProfileService {
 
   updateProfile(name: string): Observable<boolean> {
     return this.httpClient.put<HttpResponse<string>>('profile', { name }).pipe(
-      map((res: HttpResponse<string>) => {
-        console.log(res);
+      map(() => {
         return true;
       }),
       catchError((error: HttpErrorResponse) =>

@@ -85,8 +85,6 @@ export class AuthService {
       .pipe(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         map((res: HttpResponse<any>) => {
-          console.log(res);
-
           return {
             status: res.status,
           };

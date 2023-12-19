@@ -26,7 +26,16 @@ export const groupDialogReducer = createReducer(
     GroupDialogActions.loadGroupDialogSuccess,
     (state, { groupDialog, groupID }): State => ({
       ...state,
-      groupDialogs: { ...state.groupDialogs, [groupID]: groupDialog },
+      groupDialogs: {
+        ...state.groupDialogs,
+        [groupID]: {
+          ...groupDialog,
+          items: [
+            ...(state.groupDialogs?.[groupID]?.items || []),
+            ...groupDialog.items,
+          ],
+        },
+      },
     })
   ),
   on(
@@ -52,5 +61,5 @@ export const groupDialogReducer = createReducer(
       ...state,
       groupDialogs: { ...otherDialogs },
     };
-  }),
+  })
 );

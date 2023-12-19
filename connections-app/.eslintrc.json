@@ -32,6 +32,8 @@
         "prefer-destructuring": "off",
         "function-paren-newline": "off",
         "arrow-body-style": "off",
+        "object-curly-newline": "off",
+        "operator-linebreak": "off",
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-inferrable-types": "off",

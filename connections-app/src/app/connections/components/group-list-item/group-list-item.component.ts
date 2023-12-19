@@ -46,10 +46,6 @@ export class GroupListItemComponent implements OnInit {
     this.groupID = this.itemData.id;
   }
 
-  removeGroup(): void {
-    console.log(this.creatorID);
-  }
-
   openModal(e: Event): void {
     e.stopPropagation();
 
@@ -60,7 +56,6 @@ export class GroupListItemComponent implements OnInit {
   }
 
   navigateToDialogPage(): void {
-    console.log(this.groupID);
     this.store.dispatch(
       GroupDialogActions.loadGroupDialog({
         groupID: this.groupID,

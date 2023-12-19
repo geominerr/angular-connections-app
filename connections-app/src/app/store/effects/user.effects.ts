@@ -52,7 +52,6 @@ export class UserEffects {
       mergeMap((action) =>
         this.authService.signinUser(action.loginData).pipe(
           map((res) => {
-            console.log(res);
             if (res.status === 200) {
               return UserActions.userSigninSuccess({
                 redirect: true,

@@ -1,23 +1,16 @@
-<div class="form-wrapper">
-  <form action="#" class="form" [formGroup]="form">
-    <mat-form-field class="mat-form-field">
-      <input
-        class="input"
-        matInput
-        type="textarea"
-        formControlName="email"
-        formControlName="message"
-      />
-    </mat-form-field>
+<form class="form" [formGroup]="form">
+  <mat-form-field class="message-form-field--custom" appearance="outline">
+    <mat-label>Message</mat-label>
+    <input matInput formControlName="message" />
     <button
-      mat-raised-button
-      class="button"
-      type="submit"
-      color="basic"
-      [disabled]="form.invalid"
+      class="button-send"
+      mat-icon-button
+      matSuffix
       (click)="sendMessage()"
+      color="primary"
+      [disabled]="form.invalid"
     >
-      Send
+      <mat-icon>send</mat-icon>
     </button>
-  </form>
-</div>
+  </mat-form-field>
+</form>

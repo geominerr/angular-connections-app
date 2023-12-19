@@ -90,7 +90,6 @@ export class ConnectionsService {
   }
 
   sendMessage(data: { groupID: string; message: string }): Observable<string> {
-    console.log(data);
     return this.httpClient.post<string>('groups/append', { ...data }).pipe(
       map((res) => res),
       catchError((error) =>

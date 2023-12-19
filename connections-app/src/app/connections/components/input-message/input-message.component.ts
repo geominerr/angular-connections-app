@@ -14,7 +14,11 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+
 import { Store } from '@ngrx/store';
+import { ConversationActions } from 'src/app/store/actions/conversation.actions';
+import { GroupDialogActions } from 'src/app/store/actions/group-dialog.actions';
 import { ConnectionsService } from '../../services/group.service';
 
 @Component({
@@ -28,12 +32,17 @@ import { ConnectionsService } from '../../services/group.service';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatIconModule,
   ],
 })
 export class InputMessageComponent implements OnInit {
   @Input() userID!: string | null | undefined;
 
-  @Input() groupID!: string | null;
+  @Input() groupID: string | null = null;
+
+  @Input() conversationID: string | null = null;
+
+  @Input() typeInput: 'group' | 'private' = 'group';
 
   form!: FormGroup;
 
@@ -46,11 +55,23 @@ export class InputMessageComponent implements OnInit {
   }
 
   sendMessage(): void {
-    const message1: string = this.form.controls['message'].value;
-    console.log(this.groupID, this.userID);
-    this.groupService
-      .sendMessage({ message: message1, groupID: this.groupID as string })
-      .subscribe();
-    console.log(message1);
+    const message: string = this.form.controls['message'].value;
+
+    if (this.groupID) {
+      this.store.dispatch(
+        GroupDialogActions.sendMessage({ groupID: this.groupID, message })
+      );
+    }
+
+    if (this.conversationID) {
+      this.store.dispatch(
+        ConversationActions.sendMessage({
+          conversationID: this.conversationID,
+          message,
+        })
+      );
+    }
+
+    this.form.reset();
   }
 }

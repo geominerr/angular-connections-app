@@ -10,6 +10,7 @@ import { UserActions } from '../actions/user.actions';
 import { StoreActions } from '../actions/store.actions';
 import { ProfileActions } from '../actions/profile.actions';
 import { GroupActions } from '../actions/groups.action';
+import { GroupDialogActions } from '../actions/group-dialog.actions';
 import { ConversationActions } from '../actions/conversation.actions';
 
 export const userFeatureKey = 'user';
@@ -19,8 +20,6 @@ export interface State {
   groups: null | IGroupItem[];
   users: null | IUserItem[];
   userNames: Record<string, string>;
-  conversation: null | Record<string, { conversationID: string }>;
-  currentConversation: null | string;
   loginInfo: null | {
     token: string;
     uid: string;
@@ -42,8 +41,6 @@ export const initialState: State = {
   groups: null,
   users: null,
   userNames: {},
-  conversation: null,
-  currentConversation: null,
   loginInfo: null,
   userProfile: null,
   darkTheme: false,
@@ -84,13 +81,6 @@ export const reducer = createReducer(
     (state, { savedState }): State => ({
       ...state,
       ...savedState,
-      sendRequest: false,
-      userProfile: null,
-      successAction: null,
-      error: null,
-      // groups: null,
-      // users: null,
-      // conversation: null,
     })
   ),
   on(
@@ -154,7 +144,6 @@ export const reducer = createReducer(
       groups: null,
       users: null,
       userNames: {},
-      conversation: null,
       successAction: 'logout',
     })
   ),
@@ -356,7 +345,7 @@ export const reducer = createReducer(
           return acc;
         }, {} as Record<string, string>),
       },
-      successAction: 'userList',
+      successAction: null,
     })
   ),
   on(
@@ -379,18 +368,9 @@ export const reducer = createReducer(
   ),
   on(
     ConversationActions.loadConversationSuccess,
-    (state, { conversations }): State => ({
+    (state): State => ({
       ...state,
       sendRequest: false,
-      conversation: {
-        ...conversations.reduce((acc, curr) => {
-          acc[curr.companionID] = {
-            conversationID: curr.companionID,
-          };
-
-          return acc;
-        }, {} as Record<string, { conversationID: string }>),
-      },
       successAction: null,
     })
   ),
@@ -438,19 +418,6 @@ export const reducer = createReducer(
     })
   ),
   on(
-    ConversationActions.createConversationSuccess,
-    (state, { id, companionID }): State => ({
-      ...state,
-      sendRequest: false,
-      error: null,
-      successAction: null,
-      conversation: {
-        ...state.conversation,
-        [companionID]: { conversationID: id },
-      },
-    })
-  ),
-  on(
     ConversationActions.createConversationFailure,
     (state, { error }): State => ({
       ...state,
@@ -458,5 +425,98 @@ export const reducer = createReducer(
       successAction: null,
       error: { ...error },
     })
-  )
+  ),
+  on(
+    GroupDialogActions.updateGroupDialog,
+    (state): State => ({
+      ...state,
+      sendRequest: true,
+      successAction: null,
+      error: null,
+    })
+  ),
+  on(
+    GroupDialogActions.updateGroupDialogSuccess,
+    (state): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: null,
+    })
+  ),
+  on(
+    GroupDialogActions.updateGroupDialogFailure,
+    (state, { error }): State => ({
+      ...state,
+      sendRequest: false,
+      successAction: null,
+      error: { ...error },
+    })
+  ),
+  on(
+    ConversationActions.getConversationMessageFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
+  on(
+    ConversationActions.removeConversationFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
+  on(
+    ConversationActions.sendMessageFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
+  on(
+    GroupDialogActions.loadGroupDialogFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
+  on(
+    GroupDialogActions.updateGroupDialogFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
+  on(
+    GroupDialogActions.sendMessageFailure,
+    (state, { error }): State => {
+      return {
+        ...state,
+        sendRequest: false,
+        successAction: null,
+        error: { ...error },
+      };
+    }
+  ),
 );

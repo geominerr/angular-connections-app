@@ -5,7 +5,7 @@
   height: calc(100vh - 70px);
 }
 
-.group-dialog {
+.conversation {
   position: relative;
 
   display: flex;
@@ -87,7 +87,7 @@
 }
 
 @media screen and (max-width: 770px) {
-  .group-dialog {
+  .conversation {
     width: 100%;
   }
 }
