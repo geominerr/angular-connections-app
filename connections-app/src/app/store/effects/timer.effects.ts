@@ -50,4 +50,52 @@ export class TimerEffects {
       })
     );
   });
+
+  startGroupDialogTimer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TimerActions.timerGroupDialogStart),
+      switchMap((action) => {
+        let startTime: number = action.timeDuration;
+
+        return interval(1000).pipe(
+          map(() => {
+            if (startTime > 0) {
+              startTime -= 1;
+
+              return TimerActions.timerGroupDialogUpdate();
+            }
+
+            return TimerActions.timerGroupDialogStop();
+          }),
+          takeUntil(
+            this.actions$.pipe(ofType(TimerActions.timerGroupDialogStop))
+          )
+        );
+      })
+    );
+  });
+
+  startPrivateMessageTimer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TimerActions.timerPrivateMessageStart),
+      switchMap((action) => {
+        let startTime: number = action.timeDuration;
+
+        return interval(1000).pipe(
+          map(() => {
+            if (startTime > 0) {
+              startTime -= 1;
+
+              return TimerActions.timerPrivateMessageUpdate();
+            }
+
+            return TimerActions.timerPrivateMessageStop();
+          }),
+          takeUntil(
+            this.actions$.pipe(ofType(TimerActions.timerPrivateMessageStop))
+          )
+        );
+      })
+    );
+  });
 }

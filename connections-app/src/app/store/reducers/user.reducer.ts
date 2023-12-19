@@ -18,6 +18,7 @@ export interface State {
   sendRequest: boolean;
   groups: null | IGroupItem[];
   users: null | IUserItem[];
+  userNames: Record<string, string>;
   conversation: null | Record<string, { conversationID: string }>;
   currentConversation: null | string;
   loginInfo: null | {
@@ -40,6 +41,7 @@ export const initialState: State = {
   sendRequest: false,
   groups: null,
   users: null,
+  userNames: {},
   conversation: null,
   currentConversation: null,
   loginInfo: null,
@@ -151,6 +153,7 @@ export const reducer = createReducer(
       loginInfo: null,
       groups: null,
       users: null,
+      userNames: {},
       conversation: null,
       successAction: 'logout',
     })
@@ -346,6 +349,13 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       users: [...users],
+      userNames: {
+        ...users.reduce((acc, curr) => {
+          acc[curr.uid] = curr.name;
+
+          return acc;
+        }, {} as Record<string, string>),
+      },
       successAction: 'userList',
     })
   ),
@@ -408,6 +418,13 @@ export const reducer = createReducer(
       ...state,
       sendRequest: false,
       users: [...users],
+      userNames: {
+        ...users.reduce((acc, curr) => {
+          acc[curr.uid] = curr.name;
+
+          return acc;
+        }, {} as Record<string, string>),
+      },
       successAction: 'userListUpdate',
     })
   ),

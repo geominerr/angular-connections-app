@@ -1,0 +1,23 @@
+<div class="form-wrapper">
+  <form action="#" class="form" [formGroup]="form">
+    <mat-form-field class="mat-form-field">
+      <input
+        class="input"
+        matInput
+        type="textarea"
+        formControlName="email"
+        formControlName="message"
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      class="button"
+      type="submit"
+      color="basic"
+      [disabled]="form.invalid"
+      (click)="sendMessage()"
+    >
+      Send
+    </button>
+  </form>
+</div>

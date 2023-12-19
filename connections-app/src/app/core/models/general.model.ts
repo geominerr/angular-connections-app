@@ -24,6 +24,8 @@ export type TUserAction =
   | 'groupCreate'
   | 'groupRemove'
   | 'groupUpdate'
+  | 'groupDialog'
+  | 'groupAppendMessage'
   | 'userList'
   | 'userListUpdate'
   | 'conversationsList';

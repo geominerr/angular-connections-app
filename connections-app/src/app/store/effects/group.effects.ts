@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -12,19 +13,22 @@ import {
   concat,
   filter,
   take,
+  tap,
 } from 'rxjs';
 
-import { ConnectionsService } from 'src/app/connections/services/connections.service';
+import { ConnectionsService } from 'src/app/connections/services/group.service';
 import { IGroupItem } from 'src/app/connections/models/connections.model';
 import { selectGroups } from '../selectors/connections.selector';
 
 import { GroupActions } from '../actions/groups.action';
 import { TimerActions } from '../actions/timer.actions';
+import { GroupDialogActions } from '../actions/group-dialog.actions';
 
 @Injectable()
 export class GroupEffects {
   constructor(
     private actions$: Actions,
+    private router: Router,
     private connectionsService: ConnectionsService,
     private store: Store
   ) {}
@@ -73,11 +77,14 @@ export class GroupEffects {
       ofType(GroupActions.groupRemove),
       mergeMap((action) =>
         this.connectionsService.removeGroup({ groupID: action.groupID }).pipe(
-          map(() =>
+          mergeMap(() => [
             GroupActions.groupRemoveSuccess({
               groupID: action.groupID,
-            })
-          ),
+            }),
+            GroupDialogActions.deleteDialog({
+              groupID: action.groupID,
+            }),
+          ]),
           catchError((error) => of(GroupActions.groupRemoveFailure({ error })))
         )
       )
@@ -100,4 +107,16 @@ export class GroupEffects {
       )
     );
   });
+
+  deleteGroupSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(GroupActions.groupRemoveSuccess),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      );
+    },
+    { dispatch: false }
+  );
 }

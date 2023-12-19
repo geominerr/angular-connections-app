@@ -13,7 +13,7 @@ export class ModalService {
     this.matDialog.open(ModalCreateComponent);
   }
 
-  openRemoveGroupDialog(data: { groupID: string; name: string }): void {
+  openRemoveGroupDialog(data: { groupID: string; name?: string }): void {
     this.matDialog.open(ModalRemoveComponent, { data });
   }
 }

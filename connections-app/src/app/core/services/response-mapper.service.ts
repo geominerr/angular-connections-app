@@ -84,6 +84,18 @@ export class ResponseMapperService {
         typeError: 'errorMesage',
       },
     },
+    groupDialog: {
+      success: 'Group dialog loaded successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
+    groupAppendMessage: {
+      success: 'Message sent successfully',
+      error: {
+        typeError: 'errorMesage',
+      },
+    },
   };
 
   getSuccessMessage(action: TUserAction): string {

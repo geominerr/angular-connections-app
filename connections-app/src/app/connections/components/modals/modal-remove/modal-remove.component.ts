@@ -25,7 +25,7 @@ import { GroupActions } from 'src/app/store/actions/groups.action';
 export class ModalRemoveComponent implements OnInit {
   groupID!: string;
 
-  groupName!: string;
+  groupName: string | null = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { groupID: string; name: string },

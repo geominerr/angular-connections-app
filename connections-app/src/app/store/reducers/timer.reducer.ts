@@ -6,11 +6,15 @@ export const timerFeatureKey = 'timer';
 export interface State {
   groupTimer: number;
   userTimer: number;
+  groupDialogTimer: number;
+  privateMessageTimer: number;
 }
 
 export const initialState: State = {
   groupTimer: 0,
   userTimer: 0,
+  groupDialogTimer: 0,
+  privateMessageTimer: 0,
 };
 
 export const timerReducer = createReducer(
@@ -55,6 +59,48 @@ export const timerReducer = createReducer(
     (state): State => ({
       ...state,
       userTimer: 0,
+    })
+  ),
+  on(
+    TimerActions.timerGroupDialogStart,
+    (state, { timeDuration }): State => ({
+      ...state,
+      groupDialogTimer: timeDuration,
+    })
+  ),
+  on(
+    TimerActions.timerGroupDialogUpdate,
+    (state): State => ({
+      ...state,
+      groupDialogTimer: state.groupDialogTimer - 1,
+    })
+  ),
+  on(
+    TimerActions.timerGroupDialogStop,
+    (state): State => ({
+      ...state,
+      groupDialogTimer: 0,
+    })
+  ),
+  on(
+    TimerActions.timerPrivateMessageStart,
+    (state, { timeDuration }): State => ({
+      ...state,
+      privateMessageTimer: timeDuration,
+    })
+  ),
+  on(
+    TimerActions.timerPrivateMessageUpdate,
+    (state): State => ({
+      ...state,
+      privateMessageTimer: state.privateMessageTimer - 1,
+    })
+  ),
+  on(
+    TimerActions.timerPrivateMessageStop,
+    (state): State => ({
+      ...state,
+      privateMessageTimer: 0,
     })
   )
 );

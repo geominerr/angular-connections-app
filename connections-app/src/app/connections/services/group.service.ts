@@ -3,6 +3,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { groupResponseConverter } from '../utils/response-converter.util';
 import { IGroupItem, IGroupsResponse } from '../models/connections.model';
+import {
+  IGroupDialog,
+  IGroupMessagesResponse,
+} from '../models/group-dialog.model';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +50,48 @@ export class ConnectionsService {
     const params: HttpParams = new HttpParams({ fromObject: data });
 
     return this.httpClient.delete<string>('groups/delete', { params }).pipe(
+      map((res) => res),
+      catchError((error) =>
+        throwError(() => ({
+          action: 'groupRemove',
+          error: {
+            message: error?.error?.message,
+            type: error?.error?.type,
+          },
+        }))
+      )
+    );
+  }
+
+  loadGroupMessage(data: {
+    groupID: string;
+    since?: number;
+  }): Observable<IGroupDialog> {
+    const params: HttpParams = new HttpParams({ fromObject: data });
+
+    return this.httpClient
+      .get<IGroupMessagesResponse>('groups/read', { params })
+      .pipe(
+        map((res): IGroupDialog => {
+          const timeStamp: number = new Date().getTime();
+
+          return { since: timeStamp, items: res.Items };
+        }),
+        catchError((error) =>
+          throwError(() => ({
+            action: 'groupDialog',
+            error: {
+              message: error?.error?.message,
+              type: error?.error?.type,
+            },
+          }))
+        )
+      );
+  }
+
+  sendMessage(data: { groupID: string; message: string }): Observable<string> {
+    console.log(data);
+    return this.httpClient.post<string>('groups/append', { ...data }).pipe(
       map((res) => res),
       catchError((error) =>
         throwError(() => ({

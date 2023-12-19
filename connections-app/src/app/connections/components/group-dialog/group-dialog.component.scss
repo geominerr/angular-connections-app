@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 70px);
+}
+
+.group-dialog {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 70%;
+
+  border: 0.1rem solid rgba(156, 156, 156, 0.6);
+
+  .router-link {
+    position: absolute;
+    top: 2rem;
+    left: 3rem;
+
+    color: rgb(77, 77, 77);
+    font-size: 1.5rem;
+  }
+
+  &__title {
+    font-size: large;
+  }
+
+  &__btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  &__list {
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 1rem;
+    box-sizing: border-box;
+
+    border-top: 0.1rem solid rgba(156, 156, 156, 0.6);
+    border-bottom: 0.1rem solid rgba(156, 156, 156, 0.6);
+  }
+
+  &__timer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+  }
+
+  &__timer {
+    font-size: medium;
+  }
+}
+
+.mat {
+  &-nav-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+  }
+
+  &-button--custom {
+    width: 5rem;
+    height: 2.5rem;
+  }
+}
+
+.app-input-message {
+  margin-top: auto;
+}
+
+@media screen and (max-width: 770px) {
+  .group-dialog {
+    width: 100%;
+  }
+}

@@ -11,6 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 
+import { Store } from '@ngrx/store';
+import { GroupDialogActions } from 'src/app/store/actions/group-dialog.actions';
+
 import { IGroupItem } from '../../models/connections.model';
 import { ModalService } from '../../services/modal.service';
 
@@ -29,7 +32,11 @@ export class GroupListItemComponent implements OnInit {
 
   groupID!: string;
 
-  constructor(private router: Router, private modalService: ModalService) {}
+  constructor(
+    private router: Router,
+    private modalService: ModalService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     if (this.itemData.createdBy !== this.creatorID) {
@@ -54,6 +61,13 @@ export class GroupListItemComponent implements OnInit {
 
   navigateToDialogPage(): void {
     console.log(this.groupID);
+    this.store.dispatch(
+      GroupDialogActions.loadGroupDialog({
+        groupID: this.groupID,
+        groupName: this.itemData.name,
+        creatorID: this.creatorID,
+      })
+    );
     this.router.navigate(['/group', this.groupID]);
   }
 }
