@@ -151,7 +151,7 @@ export const reducer = createReducer(
     ProfileActions.profileLoad,
     (state): State => ({
       ...state,
-      sendRequest: true,
+      sendRequest: false,
       successAction: null,
       error: null,
     })
