@@ -6,15 +6,13 @@ export const timerFeatureKey = 'timer';
 export interface State {
   groupTimer: number;
   userTimer: number;
-  groupDialogTimer: number;
-  privateMessageTimer: number;
+  timerMap: Record<string, { counter: number }>;
 }
 
 export const initialState: State = {
   groupTimer: 0,
   userTimer: 0,
-  groupDialogTimer: 0,
-  privateMessageTimer: 0,
+  timerMap: {},
 };
 
 export const timerReducer = createReducer(
@@ -62,45 +60,32 @@ export const timerReducer = createReducer(
     })
   ),
   on(
-    TimerActions.timerGroupDialogStart,
-    (state, { timeDuration }): State => ({
+    TimerActions.timerStart,
+    (state, { timeDuration, id }): State => ({
       ...state,
-      groupDialogTimer: timeDuration,
+      timerMap: {
+        ...state.timerMap,
+        [id]: { counter: timeDuration },
+      },
     })
   ),
-  on(
-    TimerActions.timerGroupDialogUpdate,
-    (state): State => ({
+  on(TimerActions.timerUpdate, (state, { id }): State => {
+    const updatedTimerMap = {
+      ...state.timerMap,
+      [id]: { counter: state.timerMap[id].counter - 1 },
+    };
+
+    return {
       ...state,
-      groupDialogTimer: state.groupDialogTimer - 1,
-    })
-  ),
-  on(
-    TimerActions.timerGroupDialogStop,
-    (state): State => ({
+      timerMap: updatedTimerMap,
+    };
+  }),
+  on(TimerActions.timerStop, (state, { id }): State => {
+    const { [id]: deletedTimer, ...otherTimers } = state.timerMap;
+
+    return {
       ...state,
-      groupDialogTimer: 0,
-    })
-  ),
-  on(
-    TimerActions.timerPrivateMessageStart,
-    (state, { timeDuration }): State => ({
-      ...state,
-      privateMessageTimer: timeDuration,
-    })
-  ),
-  on(
-    TimerActions.timerPrivateMessageUpdate,
-    (state): State => ({
-      ...state,
-      privateMessageTimer: state.privateMessageTimer - 1,
-    })
-  ),
-  on(
-    TimerActions.timerPrivateMessageStop,
-    (state): State => ({
-      ...state,
-      privateMessageTimer: 0,
-    })
-  )
+      timerMap: { ...otherTimers },
+    };
+  })
 );

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { selectConversationByID } from 'src/app/store/selectors/conversation.selectors';
 import { ConversationActions } from 'src/app/store/actions/conversation.actions';
-import { selectPrivateMessageTimer } from 'src/app/store/selectors/timer.selectors';
+import { selectTimerById } from 'src/app/store/selectors/timer.selectors';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -38,7 +38,7 @@ import { IMessage } from '../../models/group-dialog.model';
 export class ConversationComponent implements OnInit {
   conversationID: string | null = null;
 
-  timer$: Observable<number> | null = null;
+  timer$: Observable<number | null> | null = null;
 
   conversation$!: Observable<IMessage[] | null>;
 
@@ -52,9 +52,9 @@ export class ConversationComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationID = this.route.snapshot.paramMap.get('id');
-    this.timer$ = this.store.select(selectPrivateMessageTimer);
 
     if (this.conversationID) {
+      this.timer$ = this.store.select(selectTimerById(this.conversationID));
       this.conversation$ = this.store.select(
         selectConversationByID(this.conversationID)
       );

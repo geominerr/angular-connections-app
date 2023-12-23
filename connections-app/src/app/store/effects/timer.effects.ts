@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { interval, switchMap, map, takeUntil } from 'rxjs';
+import { interval, switchMap, map, takeUntil, mergeMap, filter } from 'rxjs';
 import { TimerActions } from '../actions/timer.actions';
 
 @Injectable()
@@ -51,10 +51,10 @@ export class TimerEffects {
     );
   });
 
-  startGroupDialogTimer$ = createEffect(() => {
+  startIndependentTimer$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(TimerActions.timerGroupDialogStart),
-      switchMap((action) => {
+      ofType(TimerActions.timerStart),
+      mergeMap((action) => {
         let startTime: number = action.timeDuration;
 
         return interval(1000).pipe(
@@ -62,37 +62,16 @@ export class TimerEffects {
             if (startTime > 0) {
               startTime -= 1;
 
-              return TimerActions.timerGroupDialogUpdate();
+              return TimerActions.timerUpdate({ id: action.id });
             }
 
-            return TimerActions.timerGroupDialogStop();
+            return TimerActions.timerStop({ id: action.id });
           }),
           takeUntil(
-            this.actions$.pipe(ofType(TimerActions.timerGroupDialogStop))
-          )
-        );
-      })
-    );
-  });
-
-  startPrivateMessageTimer$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(TimerActions.timerPrivateMessageStart),
-      switchMap((action) => {
-        let startTime: number = action.timeDuration;
-
-        return interval(1000).pipe(
-          map(() => {
-            if (startTime > 0) {
-              startTime -= 1;
-
-              return TimerActions.timerPrivateMessageUpdate();
-            }
-
-            return TimerActions.timerPrivateMessageStop();
-          }),
-          takeUntil(
-            this.actions$.pipe(ofType(TimerActions.timerPrivateMessageStop))
+            this.actions$.pipe(
+              ofType(TimerActions.timerStop),
+              filter((actionStop) => actionStop.id === action.id)
+            )
           )
         );
       })

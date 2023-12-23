@@ -242,8 +242,9 @@ export class ConversationEffects {
         ConversationActions.getConversationMessage({
           conversationID: action.conversationID,
         }),
-        TimerActions.timerPrivateMessageStart({
+        TimerActions.timerStart({
           timeDuration: 60,
+          id: action.conversationID,
         }),
       ])
     );

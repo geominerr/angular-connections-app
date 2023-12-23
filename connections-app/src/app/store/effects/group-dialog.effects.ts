@@ -74,8 +74,9 @@ export class GroupDialogEffects {
                   groupID: action.groupID,
                   groupDialog: res,
                 }),
-                TimerActions.timerGroupDialogStart({
+                TimerActions.timerStart({
                   timeDuration: 60,
+                  id: action.groupID,
                 }),
               ]),
               catchError((error) =>

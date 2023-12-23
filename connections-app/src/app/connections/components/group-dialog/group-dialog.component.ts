@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 import { GroupDialogActions } from 'src/app/store/actions/group-dialog.actions';
-import { selectGroupDialogTimer } from 'src/app/store/selectors/timer.selectors';
+import { selectTimerById } from 'src/app/store/selectors/timer.selectors';
 import { selectGroupDialog } from 'src/app/store/selectors/group-dialog.selectors';
 import { selectUserId } from 'src/app/store/selectors/user.selectors';
 import { IGroupDialogConverted } from '../../models/group-dialog.model';
@@ -40,7 +40,7 @@ import { InputMessageComponent } from '../input-message/input-message.component'
 export class GroupDialogComponent implements OnInit {
   groupID: string | null = null;
 
-  timer$: Observable<number> | null = null;
+  timer$: Observable<number | null> | null = null;
 
   groupDialog$!: Observable<IGroupDialogConverted | null>;
 
@@ -57,7 +57,7 @@ export class GroupDialogComponent implements OnInit {
     this.userID$ = this.store.select(selectUserId);
 
     if (this.groupID) {
-      this.timer$ = this.store.select(selectGroupDialogTimer);
+      this.timer$ = this.store.select(selectTimerById(this.groupID));
       this.groupDialog$ = this.store.select(selectGroupDialog(this.groupID));
     }
   }

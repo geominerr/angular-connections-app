@@ -9,15 +9,8 @@ export const TimerActions = createActionGroup({
     'Timer User Start': props<{ timeDuration: number }>(),
     'Timer User Update': emptyProps(),
     'Timer User Stop': emptyProps(),
-    'Timer Group Dialog Start': props<{
-      timeDuration: number;
-    }>(),
-    'Timer Group Dialog Update': emptyProps(),
-    'Timer Group Dialog Stop': emptyProps(),
-    'Timer Private Message Start': props<{
-      timeDuration: number;
-    }>(),
-    'Timer Private Message Update': emptyProps(),
-    'Timer Private Message Stop': emptyProps(),
+    'Timer Start': props<{ timeDuration: number; id: string }>(),
+    'Timer Update': props<{ id: string }>(),
+    'Timer Stop': props<{ id: string }>(),
   },
 });
