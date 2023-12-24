@@ -1,0 +1,11 @@
+<div class="message" [ngClass]="{ 'message--me': itemData.isCurrUserAuthor }">
+  <div class="message__wrapper">
+    <p class="message__creation-date">
+      {{ itemData.createdAt | date : "medium" }}
+    </p>
+    <p class="message__author">{{ itemData.authorName }}</p>
+    <p class="message__content">
+      {{ itemData.message }}
+    </p>
+  </div>
+</div>

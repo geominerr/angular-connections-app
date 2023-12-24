@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Delete group</h2>
+<mat-dialog-content>
+  Are you sure you want to delete the
+  <span class="red-span">{{ groupName }} </span>
+  group ?
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button [mat-dialog-close]="false">Close</button>
+  <button mat-button color="warn" (click)="removeGroup()">Delete</button>
+</mat-dialog-actions>

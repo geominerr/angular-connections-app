@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="wrapper">
+    <h2 class="title">Page not found</h2>
+    <h3 class="sub-title">404</h3>
+    <button
+      *ngIf="(authStatus$ | async) === false"
+      mat-raised-button
+      [color]="(darkMode$ | async) ? 'primary' : 'basic'"
+      class="redirect-button"
+      (click)="navigateToSignInPage()"
+    >
+      Sign in
+    </button>
+    <button
+      *ngIf="authStatus$ | async"
+      mat-raised-button
+      [color]="(darkMode$ | async) ? 'primary' : 'basic'"
+      class="redirect-button"
+      (click)="navigateToMainPage()"
+    >
+      Go home
+    </button>
+  </div>
+</div>

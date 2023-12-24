@@ -1,0 +1,40 @@
+<div class="container" *ngIf="groupDialog$ | async">
+  <div class="group-dialog">
+    <h3 class="group-dialog__title">{{ (groupDialog$ | async)?.groupName }}</h3>
+    <a routerLink="/" class="router-link">Back to home</a>
+    <div class="group-dialog__btn-wrapper">
+      <div class="group-dialog__timer-wrapper">
+        <button
+          class="mat-button--custom"
+          mat-raised-button
+          (click)="updateGroupDialog()"
+          [disabled]="!!(timer$ | async)"
+        >
+          Update
+        </button>
+        <span class="group-dialog__timer">{{ (timer$ | async) || null }}</span>
+      </div>
+      <button
+        class="mat-button--custom"
+        color="warn"
+        mat-raised-button
+        *ngIf="(groupDialog$ | async)?.creatorID"
+        (click)="openModal()"
+      >
+        Delete
+      </button>
+    </div>
+    <div class="group-dialog__list">
+      <ng-container *ngIf="(groupDialog$ | async)?.items?.length">
+        <ng-container *ngFor="let message of (groupDialog$ | async)?.items">
+          <app-message [itemData]="message"></app-message>
+        </ng-container>
+      </ng-container>
+    </div>
+    <app-input-message
+      class="app-input-message"
+      [groupID]="groupID"
+      [userID]="userID$ | async"
+    ></app-input-message>
+  </div>
+</div>

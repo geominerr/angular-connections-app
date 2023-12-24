@@ -1,0 +1,51 @@
+<mat-toolbar color="primary" class="mat-toolbar">
+  <app-sidebar
+    appOutsideClick
+    (outsideClick)="closeMenu()"
+    [isOpen]="isMenuOpen"
+    [isLogin$]="isLogin$"
+  ></app-sidebar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="toggleMenu($event)"
+  >
+    <mat-icon class="mat-icon">menu</mat-icon>
+  </button>
+  <button mat-button color="basic" (click)="navigateToMainPage()">
+    {{ title }}
+  </button>
+  <span class="example-spacer"></span>
+  <ng-container *ngIf="isLogin$ | async">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with mail icon"
+    >
+      <mat-icon class="mat-icon">mail</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with person icon"
+      (click)="navigateToProfile()"
+    >
+      <mat-icon class="mat-icon">person</mat-icon>
+    </button>
+  </ng-container>
+
+  <button
+    *ngIf="(isLogin$ | async) === false"
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with login icon"
+    (click)="navigateToSignInPage()"
+  >
+    <mat-icon class="mat-icon">login</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-progress-bar
+  *ngIf="sendRequest$ | async"
+  mode="indeterminate"
+></mat-progress-bar>

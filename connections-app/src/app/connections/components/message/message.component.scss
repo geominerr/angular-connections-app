@@ -1,0 +1,43 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+    padding: 1rem;
+
+    border: 0.1rem solid rgba(93, 93, 93, 0.8);
+    border-radius: 1rem;
+  }
+
+  &--me {
+    align-items: flex-end;
+    .message__author {
+      color: rgb(113, 199, 170);
+    }
+  }
+
+  &__creation-date,
+  &__author,
+  &__content {
+    margin: 0;
+  }
+
+  &__creation-date {
+    font-size: 1.2rem;
+  }
+
+  &__author {
+    font-size: 1.4rem;
+    color: rgb(75, 140, 238);
+  }
+
+  &__content {
+    margin-top: 0.8rem;
+    font-size: 1.4rem;
+  }
+}

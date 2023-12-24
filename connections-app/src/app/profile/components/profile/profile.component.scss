@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.blur {
+  filter: blur(2px);
+}
+
+.form-wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30rem;
+  padding: 2rem;
+  margin-top: 8rem;
+
+  border: 0.1rem solid rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1.5rem;
+
+    border: none;
+  }
+
+  &__legend {
+    margin-bottom: 2rem;
+
+    color: #646464;
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+    font-size: 2.4rem;
+  }
+}
+
+.mat {
+  &-form-field {
+    width: 100%;
+
+    --mdc-filled-text-field-disabled-input-text-color: rgb(44, 44, 44);
+    --mdc-filled-text-field-disabled-label-text-color: rgb(77, 77, 77);
+    --mdc-filled-text-field-caret-color: rgb(0, 0, 0);
+
+    &:host-context(.dark-theme) {
+      --mdc-filled-text-field-disabled-input-text-color: rgb(252, 250, 250);
+      --mdc-filled-text-field-disabled-label-text-color: rgb(255, 255, 255);
+      --mdc-filled-text-field-caret-color: rgb(0, 0, 0);
+    }
+  }
+
+  &-button {
+    align-self: center;
+    width: 100%;
+
+    font-size: 2rem;
+  }
+
+  &-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.group-list,
+.user-list {
+  width: 50%;
+}

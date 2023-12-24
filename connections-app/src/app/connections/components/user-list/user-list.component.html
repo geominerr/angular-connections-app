@@ -1,0 +1,24 @@
+<div class="users">
+  <h3 class="users__title">User list</h3>
+  <div class="users__btn-wrapper">
+    <div class="users__timer-wrapper">
+      <button
+        class="mat-button--custom"
+        mat-raised-button
+        [color]="(darkMode$ | async) ? 'primary' : 'basic'"
+        [disabled]="!!(timer$ | async)"
+        (click)="updateUserList()"
+      >
+        Update
+      </button>
+      <span class="users__timer">{{ (timer$ | async) || null }}</span>
+    </div>
+  </div>
+  <div class="users__list">
+    <mat-nav-list class="mat-nav-list" *ngIf="users$ | async as users">
+      <ng-container *ngFor="let user of users">
+        <app-user-list-item [itemData]="user"></app-user-list-item>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+</div>
