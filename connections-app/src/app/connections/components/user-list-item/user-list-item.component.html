@@ -1,0 +1,12 @@
+<mat-list-item
+  class="mat-list-item"
+  [ngClass]="{ 'mat-list-item--target': conversationID }"
+  (click)="navigateToConversationPage()"
+>
+  <li class="mat-list-item__li">
+    <div class="circle">
+      <mat-icon class="mat-icon--person">person</mat-icon>
+    </div>
+    <span class="mat-list-item__title">{{ itemData.name }}</span>
+  </li>
+</mat-list-item>

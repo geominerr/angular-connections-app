@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="form-wrapper">
+    <form
+      action="#"
+      class="profile-form"
+      [ngClass]="{ blur: (isRequest$ | async) }"
+      [formGroup]="form"
+      (ngSubmit)="submitForm()"
+    >
+      <fieldset class="profile-form__fieldset">
+        <legend class="profile-form__legend">Profile</legend>
+
+        <mat-form-field class="mat-form-field">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="example@gmail.com"
+            formControlName="email"
+          />
+        </mat-form-field>
+        <mat-form-field
+          class="mat-form-field"
+          [ngClass]="{ 'edit-mode': editMode }"
+        >
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" />
+          <mat-error> {{ getUsernameValidationError() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="uid" />
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <mat-label>CreateAt</mat-label>
+          <input
+            matInput
+            formControlName="createDate"
+            [ngModel]="form.controls['createDate'].value | date : 'medium'"
+          />
+        </mat-form-field>
+      </fieldset>
+      <button
+        *ngIf="!editMode"
+        [disabled]="isRequest$ | async"
+        mat-button
+        color="primary"
+        class="mat-button"
+        (click)="enableEditMode()"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="editMode"
+        [disabled]="form.invalid || (isRequest$ | async)"
+        mat-button
+        color="primary"
+        type="submit"
+        class="mat-button"
+        (click)="submitForm()"
+      >
+        Save
+      </button>
+      <button
+        *ngIf="editMode"
+        [disabled]="isRequest$ | async"
+        mat-button
+        color="warn"
+        class="mat-button"
+        (click)="disableEditMode()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="form-wrapper">
+    <form
+      action="#"
+      class="signin-form"
+      [ngClass]="{ blur: (isRequest$ | async) }"
+      [formGroup]="form"
+      (ngSubmit)="submitForm()"
+    >
+      <fieldset class="signin-form__fieldset">
+        <legend class="signin-form__legend">Signin</legend>
+        <mat-form-field class="mat-form-field">
+          <mat-label>Enter your emai</mat-label>
+          <input
+            matInput
+            placeholder="example@gmail.com"
+            formControlName="email"
+          />
+          <mat-error>{{ getEmailValidationError() }}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="mat-form-field">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="toggleHidePassword($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error>{{ getPasswordValidationError() }}</mat-error>
+        </mat-form-field>
+      </fieldset>
+      <button
+        [disabled]="form.invalid || (isRequest$ | async)"
+        mat-button
+        color="primary"
+        type="submit"
+        class="mat-button"
+      >
+        Sign in
+      </button>
+      <div class="signup-nav">
+        <h3 class="signup-nav__title">
+          Don't have an account? Sign up please!
+        </h3>
+        <button
+          mat-button
+          color="primary"
+          class="mat-button"
+          (click)="redirectToSignup($event)"
+        >
+          Sign up
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

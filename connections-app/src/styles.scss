@@ -1,0 +1,239 @@
+/* You can add global styles to this file, and also import other style files */
+@import "/src/app/core/components/sidebar/sidebar-dark.mixin.scss";
+@import "/src/app/core/components/header/header-dark.mixin.scss";
+
+html {
+  font-size: 10px;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: hidden;
+}
+
+.mat-mdc-snack-bar-container {
+  &.green-snackbar,
+  &.red-snackbar {
+    --mat-snack-bar-button-color: #ffffff;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+
+  &.green-snackbar {
+    --mdc-snackbar-container-color: #378137;
+  }
+
+  &.red-snackbar {
+    --mdc-snackbar-container-color: #e65045;
+  }
+}
+
+// custom scrollbar
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #717171;
+}
+
+// DARK THEME
+
+$bg-color: #242424;
+$bg-body-color: #333333;
+$bg-input-color: #3b3b3b;
+$caret-input-color: #ffffff;
+$text-color: #ececec;
+$label-color: #d1d1d1;
+$disabled-text-color: #bcbcbc;
+$disabled-label-color: #939191;
+$disabled-button-color: rgba(201, 200, 200, 0.8);
+$border-color: rgba(236, 236, 236, 0.5);
+$box-shadow-color: #ececec;
+$box-shadow-sidebar: #9f9f9faa;
+
+.dark-theme {
+  background: $bg-body-color;
+  color: $text-color;
+
+  app-header {
+    @include dark-header($bg-color, $text-color);
+  }
+
+  app-sidebar {
+    @include dark-sidebar($bg-color, $text-color, $border-color);
+  }
+
+  app-profile {
+    .mat-field-form {
+      --mdc-filled-text-field-disabled-input-text-color: rgb(213, 213, 213);
+      --mdc-filled-text-field-disabled-label-text-color: rgb(210, 209, 209);
+      --mdc-filled-text-field-caret-color: red;
+    }
+  }
+
+  .signin-form,
+  .signup-form,
+  .profile-form {
+    background: $bg-color;
+    border: 0.2rem solid $border-color;
+
+    .mat-mdc-text-field-wrapper {
+      background: $bg-input-color;
+    }
+
+    legend {
+      color: $text-color;
+    }
+
+    .signin-nav,
+    .signup-nav {
+      border-top: 0.1rem solid $border-color;
+
+      &__title {
+        color: $text-color;
+      }
+    }
+  }
+
+  .signin-form,
+  .signup-form,
+  .profile-form {
+    .mdc-text-field--filled:not(.mdc-text-field--disabled)
+      .mdc-text-field__input {
+      color: $text-color;
+    }
+
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label,
+    .mdc-text-field--filled:not(.mdc-text-field--disabled)
+      .mdc-floating-label--float-above {
+      color: $label-color;
+    }
+
+    .mdc-text-field--filled.mdc-text-field--invalid:not(
+        .mdc-text-field--disabled
+      )
+      .mdc-floating-label,
+    .mdc-text-field--filled.mdc-text-field--invalid:not(
+        .mdc-text-field--disabled
+      )
+      .mdc-floating-label--float-above {
+      color: $caret-input-color;
+    }
+
+    .mat-mdc-button:disabled {
+      color: $disabled-button-color;
+    }
+  }
+
+  .profile-form {
+    .mat-mdc-text-field-wrapper {
+      background: rgb(45, 45, 45);
+
+      & input {
+        caret-color: #d1d1d1;
+      }
+    }
+
+    .mat-mdc-text-field-wrapper:not(.mdc-text-field--disabled) {
+      background: rgb(52, 52, 52);
+    }
+
+    .mdc-text-field--disabled .mdc-text-field__input {
+      color: $disabled-text-color;
+    }
+
+    .mdc-text-field--disabled .mdc-floating-label,
+    .mdc-text-field--disabled .mdc-floating-label--float-above {
+      color: $disabled-label-color;
+    }
+  }
+
+  // dark scrollbar
+
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #2f2f2f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbcbcbc5;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #636363;
+  }
+  .group-list {
+    .groups {
+      border-right: 0.1rem solid rgba(241, 241, 241, 0.2);
+
+      &__list {
+        border-top: 0.1rem solid rgba(241, 241, 241, 0.2);
+      }
+    }
+
+    .mat {
+      &-list-item__title,
+      &-icon {
+        color: rgb(236, 236, 236);
+      }
+    }
+
+    .circle {
+      border: 0.1rem solid rgba(241, 241, 241, 0.2);
+    }
+  }
+
+  .user-list {
+    .users {
+      border-right: 0.1rem solid rgba(241, 241, 241, 0.2);
+
+      &__list {
+        border-top: 0.1rem solid rgba(241, 241, 241, 0.2);
+      }
+    }
+
+    .mat {
+      &-list-item__title,
+      &-icon {
+        color: rgb(236, 236, 236);
+      }
+    }
+
+    .circle {
+      border: 0.1rem solid rgba(241, 241, 241, 0.2);
+    }
+  }
+
+  .group-dialog,
+  .conversation {
+    background-color: #232323;
+    border: 0.1rem solid rgba(233, 233, 233, 0.8);
+
+    &__list {
+      border-top: 0.1rem solid rgba(233, 233, 233, 0.8);
+      border-bottom: 0.1rem solid rgba(233, 233, 233, 0.8);
+    }
+  }
+  .router-link-1 {
+    color: rgb(197, 197, 197);
+  }
+
+  .form {
+    mat-form-field {
+      input {
+        background-color: #bcbcbc;
+      }
+    }
+  }
+}

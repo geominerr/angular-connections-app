@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  margin-top: 7rem;
+}
+.title {
+  font-size: 3rem;
+}
+.sub-title {
+  font-size: 6rem;
+}
+.redirect-button {
+  width: 100%;
+}

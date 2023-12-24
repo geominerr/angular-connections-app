@@ -1,0 +1,35 @@
+<div class="groups">
+  <h3 class="groups__title">Group list</h3>
+  <div class="groups__btn-wrapper">
+    <button
+      class="mat-button--custom"
+      mat-raised-button
+      [color]="(darkMode$ | async) ? 'primary' : 'basic'"
+      (click)="openModal()"
+    >
+      Create
+    </button>
+    <div class="groups__timer-wrapper">
+      <button
+        class="mat-button--custom"
+        mat-raised-button
+        [color]="(darkMode$ | async) ? 'primary' : 'basic'"
+        [disabled]="!!(timer$ | async)"
+        (click)="updateGroupList()"
+      >
+        Update
+      </button>
+      <span class="groups__timer">{{ (timer$ | async) || null }}</span>
+    </div>
+  </div>
+  <div class="groups__list">
+    <mat-nav-list class="mat-nav-list" *ngIf="groups$ | async as groups">
+      <ng-container *ngFor="let group of groups">
+        <app-group-list-item
+          [itemData]="group"
+          [creatorID]="(userID$ | async) || null"
+        ></app-group-list-item>
+      </ng-container>
+    </mat-nav-list>
+  </div>
+</div>

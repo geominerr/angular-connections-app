@@ -1,0 +1,21 @@
+@mixin dark-sidebar($bg-color, $text-color, $border-color) {
+  .sidebar {
+    background-color: $bg-color;
+
+    &--opened {
+      box-shadow: 0 0 0 100vmax rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .mat-list-item__title {
+    color: $text-color;
+  }
+
+  .user {
+    border-bottom: 0.1rem solid $border-color;
+
+    &__icon-wrapper {
+      border: 0.1rem solid $border-color;
+    }
+  }
+}

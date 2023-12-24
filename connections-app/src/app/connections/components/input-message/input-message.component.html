@@ -1,0 +1,16 @@
+<form class="form" [formGroup]="form">
+  <mat-form-field class="message-form-field--custom" appearance="outline">
+    <mat-label>Message</mat-label>
+    <input matInput formControlName="message" />
+    <button
+      class="button-send"
+      mat-icon-button
+      matSuffix
+      (click)="sendMessage()"
+      color="primary"
+      [disabled]="form.invalid"
+    >
+      <mat-icon>send</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

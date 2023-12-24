@@ -1,0 +1,18 @@
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+mat-form-field {
+  width: 80%;
+
+}
+
+.button {
+  width: 8rem;
+  height: 4.6rem;
+  position: relative;
+  top: -1.1rem;
+}
